@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>ABC JS by joeunha</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">ABC JS</h1>
+      <h2 class="project-tagline">javascript functional programming library</h2>
+      <a href="https://github.com/joeunha/abc-functional-javascript" class="btn">View on GitHub</a>
+      <a href="https://github.com/joeunha/abc-functional-javascript/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/joeunha/abc-functional-javascript/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="abcjs" class="anchor" href="#abcjs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>abcjs</h1>
+
+<p><em>abcjs는 함수형 자바스크립트(functional javascript) 라이브러리입니다.</em></p>
+
+<h2>
+<a id="특징" class="anchor" href="#%ED%8A%B9%EC%A7%95" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>특징</h2>
+
+<ul>
+<li>Web browser와 NodeJS에서 사용할 수 있습니다.</li>
+<li>Promise, jQuery Deferred Object, Future 등의 모나드식 해법 보다 간결하고 편리한 비동기 제어를 지원합니다.</li>
+<li>비동기 함수일지라도 동기 함수를 작성하듯이 논리 구조를 만들 수 있습니다.</li>
+<li>비동기 제어 기능을 더한 <code>each</code>, <code>map</code>, <code>reduce</code>, <code>filter</code>, <code>reject</code>, <code>find</code>, <code>findIndex</code>, <code>some</code>, <code>every</code>, <code>uniq</code> 함수가 있습니다.</li>
+<li>Jade와 비슷한 HTML Template 함수가 있습니다. 함수 사용과 비동기 함수를 지원합니다.</li>
+<li>sql 등을 작성하기 편한 함수가 있습니다.</li>
+<li>다른 자바스크립트 라이브러리에 대한 의존성이 없는 작은 라이브러리입니다.</li>
+<li><em>Respect Underscorejs!</em></li>
+</ul>
+
+<h2>
+<a id="시작하기" class="anchor" href="#%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>시작하기</h2>
+
+<p><strong>abcjs와 함께 함수형 프로그래밍을 즐겨보세요.</strong></p>
+
+<h2>
+<a id="목차" class="anchor" href="#%EB%AA%A9%EC%B0%A8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>목차</h2>
+
+<ul>
+<li><a href="https://github.com/marpple/abc-functional-javascript/blob/master/README.md#01-a">A (apply)</a></li>
+<li><a href="https://github.com/marpple/abc-functional-javascript/blob/master/README.md#02-b">B (bind)</a></li>
+<li><a href="https://github.com/marpple/abc-functional-javascript/blob/master/README.md#03-c">C (call)</a></li>
+<li><a href="https://github.com/marpple/abc-functional-javascript/blob/master/README.md#04-pipeline-with-abc">Pipeline with ABC</a></li>
+<li><a href="https://github.com/marpple/abc-functional-javascript/blob/master/README.md#05-asynccallback">Async (callback)</a></li>
+<li><a href="https://github.com/marpple/abc-functional-javascript/blob/master/README.md#06-async-2promise">Async-2 (Promise)</a></li>
+<li><a href="https://github.com/marpple/abc-functional-javascript/blob/master/README.md#07-eachmapfind">each, map, find, ...</a></li>
+<li><a href="https://github.com/marpple/abc-functional-javascript/blob/master/README.md#08-html-template">HTML Template</a></li>
+<li><a href="https://github.com/marpple/abc-functional-javascript/blob/master/README.md#09-if-elseif-else">IF ELSEIF ELSE</a></li>
+<li><a href="https://github.com/marpple/abc-functional-javascript/blob/master/README.md#10-ball-bdiv">B.all B.div</a></li>
+<li><a href="https://github.com/marpple/abc-functional-javascript/blob/master/README.md#11-this">this</a></li>
+<li><a href="https://github.com/marpple/abc-functional-javascript/blob/master/README.md#12-etc">ETC</a></li>
+<li><a href="https://github.com/marpple/abc-functional-javascript/blob/master/README.md#13-throw-err-catch">throw, ERR, CATCH</a></li>
+</ul>
+
+<h3>
+<a id="01-a" class="anchor" href="#01-a" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>01. <a href="https://github.com/marpple/abc-functional-javascript/blob/master/README.md/blob/master/example/01.%20A.html">A</a>
+</h3>
+
+<p><code>A</code>는 <code>apply</code>와 비슷합니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">function</span> <span class="pl-en">add</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) {
+    <span class="pl-k">return</span> a <span class="pl-k">+</span> b;
+}
+
+<span class="pl-k">var</span> r1 <span class="pl-k">=</span> <span class="pl-en">A</span>([<span class="pl-c1">20</span>, <span class="pl-c1">2</span>], add); <span class="pl-c">// add.apply(undefined, [20, 2]);</span>
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(r1);
+<span class="pl-c">// 22</span></pre></div>
+
+<p>왼쪽에서 오른쪽, 위에서 아래로 읽는게 편안합니다. 그래서 <code>A</code>는 인자와 함수사용에 대한 방향을 바꾸었습니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">function</span> <span class="pl-en">minus</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) {
+    <span class="pl-k">return</span> a <span class="pl-k">-</span> b;
+}
+
+<span class="pl-k">var</span> r2 <span class="pl-k">=</span> <span class="pl-en">A</span>([<span class="pl-c1">20</span>, <span class="pl-c1">5</span>], <span class="pl-k">function</span>() {
+    <span class="pl-k">return</span> <span class="pl-en">A</span>(<span class="pl-v">arguments</span>, minus);
+});
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(r2);
+<span class="pl-c">// 15</span></pre></div>
+
+<p>배열이나 arguments객체를 사용하면 됩니다.</p>
+
+<h3>
+<a id="02-b" class="anchor" href="#02-b" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>02. <a href="https://github.com/marpple/abc-functional-javascript/blob/master/example/02.%20B.html">B</a>
+</h3>
+
+<p><code>B</code>는 <code>this</code>를 제외한 <code>bind</code>라고 생각하면 쉽습니다.
+혹은 underscore의 <code>_.partial</code>과 유사합니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">function</span> <span class="pl-en">minus</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) {
+    <span class="pl-k">return</span> a <span class="pl-k">-</span> b;
+}
+
+<span class="pl-k">var</span> f1 <span class="pl-k">=</span> <span class="pl-en">B</span>(<span class="pl-c1">10</span>, minus);
+<span class="pl-k">var</span> r1 <span class="pl-k">=</span> <span class="pl-en">f1</span>(<span class="pl-c1">20</span>);
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(r1);
+<span class="pl-c">// -10</span></pre></div>
+
+<p><code>B</code>를 <code>X</code>와 함께 사용해보세요.
+<code>X</code>를 통해 이후 실행시에 받게될 인자의 자리를 지정해둘 수 있습니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> f2 <span class="pl-k">=</span> <span class="pl-en">B</span>(<span class="pl-c1">X</span>, <span class="pl-c1">10</span>, minus);
+<span class="pl-k">var</span> r2 <span class="pl-k">=</span> <span class="pl-en">f2</span>(<span class="pl-c1">20</span>);
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(r2);
+<span class="pl-c">// 10</span>
+
+<span class="pl-k">function</span> <span class="pl-en">minus2</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>, <span class="pl-smi">c</span>, <span class="pl-smi">d</span>) {
+    <span class="pl-k">return</span> a <span class="pl-k">-</span> b <span class="pl-k">-</span> c <span class="pl-k">-</span> d;
+}
+
+<span class="pl-k">var</span> f3 <span class="pl-k">=</span> <span class="pl-en">B</span>(<span class="pl-c1">4</span>, <span class="pl-c1">X</span>, <span class="pl-c1">X</span>, <span class="pl-c1">1</span>, minus2);
+<span class="pl-k">var</span> r3 <span class="pl-k">=</span> <span class="pl-en">f3</span>(<span class="pl-c1">3</span>, <span class="pl-c1">2</span>);
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(r3);
+<span class="pl-c">// -2</span></pre></div>
+
+<h3>
+<a id="03-c" class="anchor" href="#03-c" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>03. <a href="https://github.com/marpple/abc-functional-javascript/blob/master/example/03.%20C.html">C</a>
+</h3>
+
+<p><code>C</code>는 <code>this</code>를 제외한 <code>call</code>이라고 생각하면 쉽습니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">function</span> <span class="pl-en">minus</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) {
+    <span class="pl-k">return</span> a <span class="pl-k">-</span> b;
+}
+
+<span class="pl-k">var</span> r1 <span class="pl-k">=</span> <span class="pl-en">C</span>(<span class="pl-c1">10</span>, <span class="pl-c1">20</span>, minus);
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(r1);
+<span class="pl-c">// -10</span>
+
+<span class="pl-k">var</span> r2 <span class="pl-k">=</span> <span class="pl-en">C</span>(<span class="pl-c1">20</span>, <span class="pl-c1">10</span>, minus);
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(r2);
+<span class="pl-c">// 10</span></pre></div>
+
+<h3>
+<a id="04-pipeline-with-abc" class="anchor" href="#04-pipeline-with-abc" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>04. <a href="https://github.com/marpple/abc-functional-javascript/blob/master/example/04.%20Pipeline%20with%20ABC.html">Pipeline with ABC</a>
+</h3>
+
+<p>abcjs는 underscore의 <code>_.compose</code>나 jQuery의 chain과 유사한 코드 패턴을 지원합니다.
+객체지향적인 체인방식은 연속적으로 값을 변경해나갈 수 있지만 자신이 가진 값을 바꾸는 방법이기 때문에 사용은 쉽지만 구현이 어렵습니다.
+또한 자신이 가진 메소드와 자신의 값만을 사용하기 때문에 제약이 있습니다. 파이프라인과 같은 연속적인 함수 실행 방식은 체인방식보다 유연하고 순수 함수들을 만들 수 있어 좋습니다.</p>
+
+<p>abcjs에서는 별도의 파이프라인 함수를 만들지 않고 기본 함수 실행 함수인 ABC에서 파이프라인 패턴을 바로 사용할수 있도록 했습니다.
+또한 <code>_.compose</code>와 달리 읽기 쉬운 방향으로 순서를 바꿨습니다. 쉽습니다. 마지막 인자 자리에 함수 대신 배열로 함수들을 나열하기만 하면 됩니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">function</span> <span class="pl-en">sum</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) {
+    <span class="pl-k">return</span> a <span class="pl-k">+</span> b;
+}
+
+<span class="pl-k">function</span> <span class="pl-en">square</span>(<span class="pl-smi">a</span>) {
+    <span class="pl-k">return</span> a <span class="pl-k">*</span> a;
+}
+
+<span class="pl-k">var</span> r1 <span class="pl-k">=</span> <span class="pl-en">C</span>(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, [
+    sum,
+    square,
+    square,
+    <span class="pl-k">function</span>(<span class="pl-smi">a</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(a); <span class="pl-c">// 81</span>
+        <span class="pl-k">return</span> a <span class="pl-k">-</span> <span class="pl-c1">20</span>;
+    }]);
+
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(r1);
+<span class="pl-c">// 61</span></pre></div>
+
+<p><code>1, 2</code> 인자는 <code>sum</code>에게 <code>sum</code>의 결과는 <code>square</code>에게 그리고 그 함수의 결과는 계속 다음 함수의 인자로 넘어갑니다. 그리고 마지막 함수의 return 값은 <code>C</code>의 실행 결과가 됩니다.</p>
+
+<p><code>A</code>를 이용하면 배열과 arguments객체로 파이프라인 패턴을 사용할 수 있습니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">A</span>([<span class="pl-c1">1</span>, <span class="pl-c1">2</span>], [
+    sum,
+    square,
+    square,
+    <span class="pl-k">function</span>(<span class="pl-smi">a</span>) {
+        <span class="pl-k">return</span> a <span class="pl-k">-</span> <span class="pl-c1">20</span>;
+    },
+    <span class="pl-k">function</span>(<span class="pl-smi">r1</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(r1);
+        <span class="pl-c">// 61</span>
+    }]);</pre></div>
+
+<p><code>B</code> 함수를 이용하면 작은 함수를 모아 큰 함수를 만들 수 있습니다. 혹은 큰 함수를 작은 단위로 쪼갤 수 있습니다. 작은 함수가 많아지면 코드 재활용률을 높일 수 있습니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> f1 <span class="pl-k">=</span> <span class="pl-en">B</span>([
+    sum,
+    square,
+    square,
+    <span class="pl-k">function</span>(<span class="pl-smi">a</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(a); <span class="pl-c">// 81</span>
+        <span class="pl-k">return</span> a <span class="pl-k">-</span> <span class="pl-c1">20</span>;
+    }]);
+
+<span class="pl-k">var</span> r3 <span class="pl-k">=</span> <span class="pl-en">f1</span>(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>);
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(r3);
+<span class="pl-c">// 61</span></pre></div>
+
+<p>함수 조합에서도 <code>X</code>와 함께 사용하여 인자를 미리 적용 해둘 수 있습니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">function</span> <span class="pl-en">minus</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) {
+    <span class="pl-k">return</span> a <span class="pl-k">-</span> b;
+}
+
+<span class="pl-k">var</span> f2 <span class="pl-k">=</span> <span class="pl-en">B</span>(<span class="pl-c1">X</span>, <span class="pl-c1">10</span>, [
+    f1,
+    <span class="pl-en">B</span>(<span class="pl-c1">X</span>, <span class="pl-c1">11</span>, minus)
+]);
+
+<span class="pl-k">var</span> r4 <span class="pl-k">=</span> <span class="pl-en">f2</span>(<span class="pl-k">-</span><span class="pl-c1">7</span>);
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(r4);
+<span class="pl-c">// 50</span></pre></div>
+
+<p>chain 패턴이나 <code>_.compose</code>, <code>Promise</code> 등의 일종의 파이프라인 혹은 모나드 등에서 아쉬운점은 함수 모음의 첫번째 함수를 제외하고는 인자를 하나만 받을 수 있다는 점 입니다.</p>
+
+<p><code>B(X, 11, minus)</code> 를 통해 두개의 인자가 사용되도록 했지만 여전히 사실은 위에서 부터 내려오는 인자는 하나입니다.</p>
+
+<p>인자를 하나만 받는 함수만 조립할 수 있다면 실용성이 떨어지고 인자가 두개 이상 필요한 함수를 사용하기 위해선 항상 wrapper 함수가 있어야합니다.
+이를 위해 <code>MR</code>이 있습니다. <code>MR</code>을 이용하면 다음 함수가 여러개의 결과를 인자로 받을 수 있습니다.
+<code>MR</code> 사용은 아래와 같은 두가지 사용법이 있습니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">C</span>(<span class="pl-c1">3</span>, <span class="pl-c1">2</span>, [
+    <span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) {
+        <span class="pl-k">return</span> <span class="pl-en">MR</span>(a <span class="pl-k">+</span> b, a <span class="pl-k">-</span> b, a <span class="pl-k">*</span> b); <span class="pl-c">// multiple results</span>
+    },
+    <span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>, <span class="pl-smi">c</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(a, b, c);
+        <span class="pl-k">return</span> <span class="pl-en">MR</span>(a, c); <span class="pl-c">// multiple results</span>
+    },
+    <span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">c</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(a, c);
+        <span class="pl-k">return</span> <span class="pl-v">arguments</span>;
+    },
+    <span class="pl-c1">C</span>.<span class="pl-smi">toMR</span>, <span class="pl-c">// arguments to multiple results</span>
+    <span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">c</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(a, c); <span class="pl-c">// 5, 6</span>
+    }]);</pre></div>
+
+<p><code>B</code>를 통해 함수를 정의하면 ABC를 이용하지 않고도 <code>MR()</code>을 동작 시킬 수 있습니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> minus <span class="pl-k">=</span> <span class="pl-en">B</span>(<span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) {
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(a, b); <span class="pl-c">// 20, 10</span>
+    <span class="pl-k">return</span> a <span class="pl-k">-</span> b;
+});
+
+<span class="pl-k">var</span> r5 <span class="pl-k">=</span> <span class="pl-en">minus</span>(<span class="pl-c1">10</span>, <span class="pl-c1">20</span>);
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(r5); <span class="pl-c">// -10</span>
+
+<span class="pl-c">/* swap 함수의 multiple results를 바로 minus에게 넘김 */</span>
+<span class="pl-k">var</span> <span class="pl-en">swap</span> <span class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) {
+    <span class="pl-k">return</span> <span class="pl-en">MR</span>(b, a);
+};
+<span class="pl-k">var</span> r6 <span class="pl-k">=</span> <span class="pl-en">minus</span>(<span class="pl-en">swap</span>(<span class="pl-c1">10</span>, <span class="pl-c1">20</span>));
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(r6);
+<span class="pl-c">// 10</span></pre></div>
+
+<p><code>MR</code>은 Go언어의 Multiple Results와 비슷합니다.
+<a href="https://tour.golang.org/basics/6">GO Lang - Multiple Results</a></p>
+
+<p>함수 조립의 즐거움을 맛보세요.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> difference <span class="pl-k">=</span> <span class="pl-en">B</span>([
+    <span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) {
+        <span class="pl-k">return</span> <span class="pl-en">MR</span>(<span class="pl-c1">Math</span>.<span class="pl-c1">max</span>(a, b), <span class="pl-c1">Math</span>.<span class="pl-c1">min</span>(a, b));
+    },
+    minus
+]);
+
+<span class="pl-k">var</span> r7 <span class="pl-k">=</span> <span class="pl-en">difference</span>(<span class="pl-c1">10</span>, <span class="pl-c1">20</span>);
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(r7);
+<span class="pl-c">// 10</span>
+
+<span class="pl-k">var</span> r8 <span class="pl-k">=</span> <span class="pl-en">difference</span>(<span class="pl-c1">30</span>, <span class="pl-c1">10</span>);
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(r8);
+<span class="pl-c">// 20</span></pre></div>
+
+<p>abcjs의 다른 함수를 활용하면  <code>difference</code>를 아래와 같이 구현할 수도 있습니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> difference2 <span class="pl-k">=</span> <span class="pl-en">B</span>([
+    <span class="pl-c1">C</span>.<span class="pl-smi">args</span>, <span class="pl-c">// function() { return arguments },</span>
+    <span class="pl-smi">_</span>.<span class="pl-smi">toArray</span>,
+    <span class="pl-c1">B</span>.<span class="pl-en">M</span>(<span class="pl-s"><span class="pl-pds">'</span>sort<span class="pl-pds">'</span></span>), <span class="pl-c">// function(a) { return a.sort(); },</span>
+    <span class="pl-c1">B</span>.<span class="pl-en">M</span>(<span class="pl-s"><span class="pl-pds">'</span>reverse<span class="pl-pds">'</span></span>),  <span class="pl-c">// function(a) { return a.reverse(); },</span>
+    <span class="pl-c1">C</span>.<span class="pl-smi">toMR</span>, <span class="pl-c">// array to multiple results</span>
+    minus]);
+
+<span class="pl-k">var</span> r9 <span class="pl-k">=</span> <span class="pl-en">difference2</span>(<span class="pl-c1">10</span>, <span class="pl-c1">20</span>);
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(r9);
+<span class="pl-c">// 10</span>
+
+<span class="pl-k">var</span> r10 <span class="pl-k">=</span> <span class="pl-en">difference2</span>(<span class="pl-c1">30</span>, <span class="pl-c1">10</span>);
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(r10);
+<span class="pl-c">// 20</span>
+
+<span class="pl-k">var</span> difference3 <span class="pl-k">=</span> <span class="pl-en">B</span>([minus, <span class="pl-c1">Math</span>.<span class="pl-smi">abs</span>]);
+
+<span class="pl-k">var</span> r11 <span class="pl-k">=</span> <span class="pl-en">difference3</span>(<span class="pl-c1">10</span>, <span class="pl-c1">20</span>);
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(r11);
+<span class="pl-c">// 10</span>
+
+<span class="pl-k">var</span> r12 <span class="pl-k">=</span> <span class="pl-en">difference3</span>(<span class="pl-c1">30</span>, <span class="pl-c1">10</span>);
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(r12);
+<span class="pl-c">// 20</span></pre></div>
+
+<h3>
+<a id="05-asynccallback" class="anchor" href="#05-asynccallback" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>05. <a href="https://github.com/marpple/abc-functional-javascript/blob/master/example/05.%20Async%20(callback).html">Async(callback)</a>
+</h3>
+
+<p>abcjs에서는 비동기 제어와 관련된 다양한 기능을 제공합니다.
+파이프라인에서 사용할 콜백 패턴의 함수를 <code>CB</code> 함수로 한번 넘겨 두기만 하면 됩니다.
+<code>CB</code>가 감싸졌던 <code>f1</code>이라는 함수를 파이프라인에 넣어두면 <code>C</code>함수 안에서 <code>f1</code>에게 필요한 callback 함수를 생성하여 마지막 인자로 넣어줍니다.
+생성된 callback 함수로 값을 꺼낸 후 파이프라인의 다음 함수에게 결과를 전달합니다.
+<code>CB</code>로 감싼 후 callback 함수 인자의 자리만 제외하고 실행하거나 <code>CB(익명함수)</code>를 통해 <code>C</code>에게 받은 callback 함수를 사용하여 결과를 다음 함수로 전달할 수 있습니다.
+Promise와 달리 여러개의 인자를 다음 함수로 주고 있던 함수이더라도 여러개의 인자로 받을 수 있습니다.
+이런 콜백 함수와 사용할때 유용합니다. <code>function(err, data) { ... }</code></p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">function</span> <span class="pl-en">delay</span>(<span class="pl-smi">func</span>) {
+    <span class="pl-c1">setTimeout</span>(<span class="pl-k">function</span>() {
+        <span class="pl-en">func</span>();
+    }, <span class="pl-c1">1000</span>);
+}
+
+<span class="pl-k">function</span> <span class="pl-en">sum</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>, <span class="pl-smi">cb</span>) {
+    <span class="pl-en">delay</span>(<span class="pl-k">function</span>() {
+        <span class="pl-en">cb</span>(a <span class="pl-k">+</span> b);
+    });
+}
+
+<span class="pl-k">function</span> <span class="pl-en">minus</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>, <span class="pl-smi">cb</span>) {
+    <span class="pl-en">delay</span>(<span class="pl-k">function</span>() {
+        <span class="pl-en">cb</span>(a <span class="pl-k">-</span> b);
+    });
+}
+
+<span class="pl-k">function</span> <span class="pl-en">square</span>(<span class="pl-smi">a</span>, <span class="pl-smi">cb</span>) {
+    <span class="pl-en">delay</span>(<span class="pl-k">function</span>() {
+        <span class="pl-en">cb</span>(a <span class="pl-k">*</span> a);
+    });
+}
+
+<span class="pl-en">sum</span>(<span class="pl-c1">10</span>, <span class="pl-c1">20</span>, <span class="pl-k">function</span> (<span class="pl-smi">r</span>) {
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(r); <span class="pl-c">// 30</span>
+});
+
+<span class="pl-en">minus</span>(<span class="pl-c1">10</span>, <span class="pl-c1">7</span>, <span class="pl-k">function</span>(<span class="pl-smi">r</span>) {
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(r); <span class="pl-c">// 3</span>
+});
+
+<span class="pl-en">sum</span>(<span class="pl-c1">5</span>, <span class="pl-c1">7</span>, <span class="pl-k">function</span>(<span class="pl-smi">r</span>) {
+    <span class="pl-en">minus</span>(r, <span class="pl-c1">5</span>, <span class="pl-k">function</span>(<span class="pl-smi">r</span>) {
+        <span class="pl-en">square</span>(r, <span class="pl-k">function</span>(<span class="pl-smi">r</span>) {
+            <span class="pl-en">console</span>.<span class="pl-c1">log</span>(r); <span class="pl-c">// 49</span>
+        });
+    });
+});</pre></div>
+
+<p><code>CB</code>를 감싸두기만 하면 됩니다. 파이프라인이 넘겨준 <code>CB</code> 함수를 이용하여 값을 넘기면 다음 함수로 전달됩니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">CB</span>(sum, minus, square);
+
+<span class="pl-en">C</span>(<span class="pl-c1">5</span>, <span class="pl-c1">10</span>, [
+    sum,
+    <span class="pl-en">CB</span>(<span class="pl-k">function</span>(<span class="pl-smi">r</span>, <span class="pl-smi">cb</span>) {
+        <span class="pl-en">minus</span>(r, <span class="pl-c1">5</span>, cb);
+    }),
+    square,
+    <span class="pl-k">function</span>(<span class="pl-smi">r</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(r); <span class="pl-c">// 100</span>
+    }
+]);</pre></div>
+
+<p><code>B</code>를 활용하여 좀더 간략하게 만들 수 있습니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">C</span>(<span class="pl-c1">5</span>, <span class="pl-c1">9</span>, [
+    sum,
+    <span class="pl-en">B</span>(<span class="pl-c1">X</span>, <span class="pl-c1">5</span>, minus),
+    square,
+    <span class="pl-k">function</span>(<span class="pl-smi">r</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(r); <span class="pl-c">// 81</span>
+    }
+]);</pre></div>
+
+<div class="highlight highlight-source-js"><pre>.<span class="pl-en">then</span>(<span class="pl-k">function</span>() {
+  <span class="pl-k">return</span> <span class="pl-k">new</span> <span class="pl-en">Promise</span>(<span class="pl-k">function</span>(<span class="pl-smi">rs</span>) {
+      <span class="pl-en">sum</span>(<span class="pl-c1">5</span>, <span class="pl-c1">10</span>, rs)
+  });
+}).<span class="pl-en">then</span>(<span class="pl-k">function</span>() {
+  <span class="pl-k">return</span> <span class="pl-k">new</span> <span class="pl-en">Promise</span>(<span class="pl-k">function</span>(<span class="pl-smi">rs</span>) {
+      <span class="pl-en">minus</span>(<span class="pl-c1">5</span>, <span class="pl-c1">10</span>, rs)
+  });
+});</pre></div>
+
+<p>이 방법은 일반 콜백함수를 Promise로 제어하는 것보다 간단합니다. 또한 새로운 함수를 만들지 않으며 <code>CB</code>를 감싼 뒤라도 콜백 패턴의 함수를 원래 사용하던대로 사용할 수도 있습니다.
+유사한 개념이지만 새로운 함수를 뱉는 <code>Promise.promisify</code> 보다 단순하고 새로운 개념을 알 필요가 없습니다.
+<code>.then()</code>과 달리 multiple results도 가능합니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">C</span>(<span class="pl-c1">5</span>, <span class="pl-c1">9</span>, [
+    sum,
+    <span class="pl-en">CB</span>(<span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">cb</span>) {
+        <span class="pl-en">delay</span>(<span class="pl-k">function</span>() {
+            <span class="pl-en">cb</span>(a, <span class="pl-c1">10</span>); <span class="pl-c">// auto multiple results</span>
+        });
+    }),
+    minus,
+    <span class="pl-k">function</span>(<span class="pl-smi">r</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(r); <span class="pl-c">// 4</span>
+    }
+]);</pre></div>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> $ <span class="pl-k">=</span> {};
+
+<span class="pl-smi">$</span>.<span class="pl-en">get</span> <span class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">url</span>, <span class="pl-smi">cb</span>) {
+    <span class="pl-en">delay</span>(<span class="pl-k">function</span>() {
+        <span class="pl-en">cb</span>({
+            a<span class="pl-k">:</span> <span class="pl-c1">5</span>,
+            b<span class="pl-k">:</span> <span class="pl-c1">3</span>
+        });
+    });
+};
+
+<span class="pl-smi">$</span>.<span class="pl-en">post</span> <span class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">url</span>, <span class="pl-smi">data</span>, <span class="pl-smi">cb</span>) {
+    <span class="pl-en">delay</span>(<span class="pl-k">function</span>() {
+        <span class="pl-en">cb</span>(<span class="pl-smi">_</span>.<span class="pl-en">extend</span>(data, { created_at<span class="pl-k">:</span> <span class="pl-k">new</span> <span class="pl-en">Date</span>() }));
+    });
+};
+
+<span class="pl-smi">$</span>.<span class="pl-en">put</span> <span class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">url</span>, <span class="pl-smi">data</span>, <span class="pl-smi">cb</span>) {
+    <span class="pl-en">delay</span>(<span class="pl-k">function</span>() {
+        <span class="pl-en">cb</span>(<span class="pl-smi">_</span>.<span class="pl-en">extend</span>(data, { updated_at<span class="pl-k">:</span> <span class="pl-k">new</span> <span class="pl-en">Date</span>() }));
+    });
+};</pre></div>
+
+<p><code>$.get</code>, <code>$.post</code> 등과 유사한 위와 같은 함수가 있다고 가정할때 아래와 같이 활용할 수 있습니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">C</span>([
+    <span class="pl-en">CB</span>(<span class="pl-k">function</span>(<span class="pl-smi">cb</span>) {
+        <span class="pl-smi">$</span>.<span class="pl-c1">get</span>(<span class="pl-s"><span class="pl-pds">"</span>/get_data<span class="pl-pds">"</span></span>, cb);
+    },
+    <span class="pl-k">function</span>(<span class="pl-smi">data</span>, <span class="pl-smi">cb</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">_</span>.<span class="pl-en">clone</span>(data)); <span class="pl-c">// {a: 5, b: 3}</span>
+        <span class="pl-smi">$</span>.<span class="pl-en">post</span>(<span class="pl-s"><span class="pl-pds">"</span>/post_data<span class="pl-pds">"</span></span>, <span class="pl-smi">_</span>.<span class="pl-en">extend</span>(data, { c<span class="pl-k">:</span> <span class="pl-c1">10</span> }), cb);
+    },
+    <span class="pl-k">function</span>(<span class="pl-smi">data</span>, <span class="pl-smi">cb</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">_</span>.<span class="pl-en">clone</span>(data)); <span class="pl-c">// {a: 5, b: 3, c: 10, created_at: Tue Sep 13 2016 04:01:19 GMT+0900 (KST)}</span>
+        <span class="pl-smi">$</span>.<span class="pl-en">put</span>(<span class="pl-s"><span class="pl-pds">"</span>/put_data<span class="pl-pds">"</span></span>, <span class="pl-smi">_</span>.<span class="pl-en">extend</span>(data, { c<span class="pl-k">:</span> <span class="pl-c1">5</span> }), cb);
+    }),
+    <span class="pl-k">function</span>(<span class="pl-smi">r</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(r);
+        <span class="pl-c">// {a: 5, b: 3, c: 5, created_at: Tue Sep 13 2016 04:03:58 GMT+0900 (KST), updated_at: Tue Sep 13 2016 04:03:59 GMT+0900 (KST)}</span>
+    }
+]);</pre></div>
+
+<p><code>B</code>를 활용하면 더욱 깔끔하게 만들 수 있습니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">CB</span>(<span class="pl-smi">$</span>.<span class="pl-smi">get</span>, <span class="pl-smi">$</span>.<span class="pl-smi">post</span>, <span class="pl-smi">$</span>.<span class="pl-smi">put</span>);
+
+<span class="pl-en">C</span>([
+    <span class="pl-en">B</span>(<span class="pl-s"><span class="pl-pds">"</span>/get_data<span class="pl-pds">"</span></span>, <span class="pl-smi">$</span>.<span class="pl-smi">get</span>),
+    <span class="pl-en">B</span>({ c<span class="pl-k">:</span> <span class="pl-c1">20</span> }, <span class="pl-smi">_</span>.<span class="pl-smi">extend</span>),
+    <span class="pl-en">B</span>(<span class="pl-s"><span class="pl-pds">"</span>/post_data<span class="pl-pds">"</span></span>, <span class="pl-smi">$</span>.<span class="pl-smi">post</span>),
+    <span class="pl-en">B</span>({ c<span class="pl-k">:</span> <span class="pl-c1">30</span> }, <span class="pl-smi">_</span>.<span class="pl-smi">extend</span>),
+    <span class="pl-en">B</span>(<span class="pl-s"><span class="pl-pds">"</span>/put_data<span class="pl-pds">"</span></span>, <span class="pl-smi">$</span>.<span class="pl-smi">put</span>),
+    <span class="pl-k">function</span>(<span class="pl-smi">r</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(r);
+        <span class="pl-c">// {c: 20, a: 5, b: 3, created_at: Tue Sep 13 2016 04:01:19 GMT+0900 (KST), updated_at: Tue Sep 13 2016 04:01:20 GMT+0900 (KST)}</span>
+    }
+]);</pre></div>
+
+<p><code>J</code>와 <code>MR</code>을 활용하면 다음과 같이 사용할 수 있습니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">function</span> <span class="pl-en">J</span>(<span class="pl-smi">v</span>) {
+ <span class="pl-k">return</span> <span class="pl-k">function</span>() {
+     <span class="pl-k">return</span> v;
+ }
+}</pre></div>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">C</span>([
+    <span class="pl-en">J</span>(<span class="pl-en">MR</span>(<span class="pl-s"><span class="pl-pds">"</span>/post_data<span class="pl-pds">"</span></span>, { aka<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Cojamm<span class="pl-pds">'</span></span> })),
+    <span class="pl-smi">$</span>.<span class="pl-smi">post</span>,
+    <span class="pl-k">function</span>(<span class="pl-smi">r</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(r); <span class="pl-c">// {aka: "Cojamm", created_at: Tue Sep 13 2016 04:01:18 GMT+0900 (KST)}</span>
+    }
+]);</pre></div>
+
+<p><em>*참고 - 실제 jQuery의 <code>$.get</code> 함수등은 <code>{ then: func.. }</code> 를 리턴하기 때문에 <code>CB</code>로 감싸는 방식으로 구현할 필요 없습니다.</em></p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">/* B를 감싸서 함수를 만들어두면 아래와 같이도 사용할 수 있습니다. 비동기 함수를 아래와 같이도 사용할 수 있습니다. */</span>
+<span class="pl-en">CB</span>(sum, minus, square);
+<span class="pl-k">function</span> <span class="pl-en">sum</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>, <span class="pl-smi">cb</span>) {
+    <span class="pl-en">delay</span>(<span class="pl-k">function</span>() {
+        <span class="pl-en">cb</span>(a <span class="pl-k">+</span> b);
+    });
+}
+<span class="pl-k">function</span> <span class="pl-en">minus</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>, <span class="pl-smi">cb</span>) {
+    <span class="pl-en">delay</span>(<span class="pl-k">function</span>() {
+        <span class="pl-en">cb</span>(a <span class="pl-k">-</span> b);
+    });
+}
+<span class="pl-k">function</span> <span class="pl-en">square</span>(<span class="pl-smi">a</span>, <span class="pl-smi">cb</span>) {
+    <span class="pl-en">delay</span>(<span class="pl-k">function</span>() {
+        <span class="pl-en">cb</span>(a <span class="pl-k">*</span> a);
+    });
+}
+<span class="pl-k">var</span> sq <span class="pl-k">=</span> <span class="pl-en">B</span>(square);
+<span class="pl-k">var</span> m5 <span class="pl-k">=</span> <span class="pl-en">B</span>(<span class="pl-c1">X</span>, <span class="pl-c1">5</span>, minus);
+<span class="pl-k">var</span> s <span class="pl-k">=</span> <span class="pl-en">B</span>(sum);
+<span class="pl-k">var</span> log <span class="pl-k">=</span> <span class="pl-en">B</span>(<span class="pl-k">function</span>() {
+    <span class="pl-en">console</span>.<span class="pl-smi">log</span>.<span class="pl-c1">apply</span>(<span class="pl-en">console</span>, <span class="pl-v">arguments</span>);
+});
+<span class="pl-en">log</span>(<span class="pl-en">sq</span>(<span class="pl-en">m5</span>(<span class="pl-en">s</span>(<span class="pl-c1">10</span>, <span class="pl-c1">10</span>))));
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>216 line<span class="pl-pds">'</span></span>);</pre></div>
+
+<h3>
+<a id="06-async-2promise" class="anchor" href="#06-async-2promise" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>06. <a href="https://github.com/marpple/abc-functional-javascript/blob/master/example/06.%20Async-2%20(Promise).html">Async-2(Promise)</a>
+</h3>
+
+<p>abcjs는 Promise가 필요 없지만 <code>.then</code>을 리턴하는 함수의 비동기 제어를 지원합니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">function</span> <span class="pl-en">delay</span>() {
+    <span class="pl-k">return</span> <span class="pl-k">new</span> <span class="pl-en">Promise</span>(<span class="pl-k">function</span>(<span class="pl-smi">rs</span>) {
+        <span class="pl-c1">setTimeout</span>(<span class="pl-k">function</span>() {
+            <span class="pl-en">rs</span>();
+        }, <span class="pl-c1">1000</span>);
+    })
+}
+
+<span class="pl-k">function</span> <span class="pl-en">sum</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) {
+    <span class="pl-k">return</span> <span class="pl-en">delay</span>().<span class="pl-en">then</span>(<span class="pl-k">function</span>() {
+        <span class="pl-k">return</span> a <span class="pl-k">+</span> b;
+    });
+}
+
+<span class="pl-k">function</span> <span class="pl-en">minus</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) {
+    <span class="pl-k">return</span> <span class="pl-en">delay</span>().<span class="pl-en">then</span>(<span class="pl-k">function</span>() {
+        <span class="pl-k">return</span> a <span class="pl-k">-</span> b;
+    });
+}
+
+<span class="pl-k">function</span> <span class="pl-en">square</span>(<span class="pl-smi">a</span>) {
+    <span class="pl-k">return</span> <span class="pl-en">delay</span>().<span class="pl-en">then</span>(<span class="pl-k">function</span>() {
+        <span class="pl-k">return</span> a <span class="pl-k">*</span> a;
+    });
+}
+
+<span class="pl-c">// Promise</span>
+<span class="pl-en">sum</span>(<span class="pl-c1">2</span>, <span class="pl-c1">4</span>)
+    .<span class="pl-en">then</span>(<span class="pl-k">function</span>(<span class="pl-smi">r</span>) {
+        <span class="pl-k">return</span> <span class="pl-en">minus</span>(r, <span class="pl-c1">4</span>);
+    }).<span class="pl-en">then</span>(<span class="pl-k">function</span>(<span class="pl-smi">r</span>) {
+        <span class="pl-k">return</span> <span class="pl-en">square</span>(r);
+    }).<span class="pl-en">then</span>(<span class="pl-k">function</span>(<span class="pl-smi">r</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(r); <span class="pl-c">// 4</span>
+    });
+
+<span class="pl-c">// ABC</span>
+<span class="pl-en">C</span>(<span class="pl-c1">3</span>, <span class="pl-c1">6</span>, [
+    sum,
+    <span class="pl-k">function</span>(<span class="pl-smi">r</span>) {
+        <span class="pl-k">return</span> <span class="pl-en">minus</span>(r, <span class="pl-c1">5</span>);
+    },
+    square,
+    <span class="pl-k">function</span>(<span class="pl-smi">r</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(r); <span class="pl-c">// 16</span>
+    }]);</pre></div>
+
+<p>아래와 같이 마지막 결과를 <code>then</code>으로 받을 수 있어 Promise와 함께 사용이 가능합니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">C</span>(<span class="pl-c1">5</span>, <span class="pl-c1">5</span>, [
+    sum,
+    square
+]).<span class="pl-en">then</span>(<span class="pl-k">function</span>(<span class="pl-smi">r</span>) {
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(r); <span class="pl-c">// 100</span>
+});
+
+<span class="pl-en">sum</span>(<span class="pl-c1">2</span>, <span class="pl-c1">4</span>)
+    .<span class="pl-en">then</span>(<span class="pl-k">function</span>(<span class="pl-smi">r</span>) {
+        <span class="pl-k">return</span> <span class="pl-en">C</span>(r, <span class="pl-c1">2</span>, [
+            sum,
+            square
+        ]);
+    }).<span class="pl-en">then</span>(<span class="pl-k">function</span>(<span class="pl-smi">r</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(r); <span class="pl-c">// 64</span>
+    });
+
+<span class="pl-c">// B를 사용하면 더욱 간단하게 만들 수 있습니다.</span>
+<span class="pl-en">sum</span>(<span class="pl-c1">2</span>, <span class="pl-c1">4</span>)
+    .<span class="pl-en">then</span>(<span class="pl-en">B</span>(<span class="pl-c1">X</span>, <span class="pl-c1">2</span>, [
+        sum,
+        square
+    ])).<span class="pl-en">then</span>(<span class="pl-k">function</span>(<span class="pl-smi">r</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(r); <span class="pl-c">// 64</span>
+    });
+
+<span class="pl-c">// CB와 함께 사용 가능합니다.</span>
+<span class="pl-en">C</span>(<span class="pl-c1">5</span>, <span class="pl-c1">5</span>, [
+    sum,
+    square,
+    <span class="pl-en">CB</span>(<span class="pl-k">function</span>(<span class="pl-smi">r</span>, <span class="pl-smi">cb</span>) {
+        <span class="pl-en">cb</span>(r <span class="pl-k">/</span> <span class="pl-c1">2</span>)
+    })
+]).<span class="pl-en">then</span>(<span class="pl-k">function</span>(<span class="pl-smi">r</span>) {
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(r); <span class="pl-c">// 50</span>
+});</pre></div>
+
+<p>만일 es6 Promise나 Promise Library가 있다면 <code>C()</code>는 Promise 객체를 리턴합니다.
+그렇지 않다면 <code>C()</code>의 리턴 값이 <code>{}.then()</code>의 형태를 띄지만 Promise 객체는 아닙니다.
+<code>function has_promise() { (window || global).Promise.prototype.then; }</code>
+<code>has_promise() ? new Promise(function(rs) { resolve = rs; }) : { then: function(rs) { resolve = rs; } })</code></p>
+
+<h3>
+<a id="07-eachmapfind" class="anchor" href="#07-eachmapfind" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>07. <a href="https://github.com/marpple/abc-functional-javascript/blob/master/example/07.%20each...map...find....html">each...map...find...</a>
+</h3>
+
+<p>underscorejs의 <code>each</code>, <code>map</code>, <code>find</code> 등의 함수보다 편의성을 높였습니다.</p>
+
+<ol>
+<li>this는 사용하지 않으며 대신 iteratee 함수에게 인자를 여러개를 넘길 수 있습니다.
+
+<ul>
+<li>ex) [1, 2, 3], arg1, arg2, arg3 =&gt; value, key, list, arg1, arg2, arg3 ...</li>
+</ul>
+</li>
+<li>비동기 제어가 됩니다.</li>
+<li>iteratee나 predicate 함수를 파이프라인으로 만들 수 있습니다.</li>
+<li>즉시 실행인 <code>C.map</code>과 부분 실행 컨셉의 <code>B.map</code>이 있어 파이프라인에서 편하게 사용할 수 있습니다.</li>
+</ol>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">function</span> <span class="pl-en">delay</span>(<span class="pl-smi">func</span>) {
+    <span class="pl-c1">setTimeout</span>(<span class="pl-k">function</span>() {
+        <span class="pl-en">func</span>();
+    }, <span class="pl-c1">1000</span>);
+}
+
+<span class="pl-k">function</span> <span class="pl-en">sum</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) {
+    <span class="pl-k">return</span> a <span class="pl-k">+</span> b;
+}
+
+<span class="pl-k">function</span> <span class="pl-en">square</span>(<span class="pl-smi">a</span>) {
+    <span class="pl-k">return</span> a <span class="pl-k">*</span> a;
+}
+
+<span class="pl-c1">C</span>.<span class="pl-en">each</span>([<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>], <span class="pl-k">function</span>(<span class="pl-smi">v</span>) {
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(v);
+});
+<span class="pl-c">// 1</span>
+<span class="pl-c">// 2</span>
+<span class="pl-c">// 3</span>
+
+<span class="pl-k">var</span> r1 <span class="pl-k">=</span> <span class="pl-c1">C</span>.<span class="pl-en">map</span>([<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>], square);
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(r1); <span class="pl-c">// [1, 4, 9]</span>
+
+<span class="pl-c">/* iteratee 함수를 파이프라인으로 만들 수 있습니다. */</span>
+<span class="pl-k">var</span> r2 <span class="pl-k">=</span> <span class="pl-c1">C</span>.<span class="pl-en">map</span>({ a<span class="pl-k">:</span> <span class="pl-c1">1</span>, b<span class="pl-k">:</span> <span class="pl-c1">2</span>, c<span class="pl-k">:</span> <span class="pl-c1">3</span> }, [<span class="pl-c1">I</span>, square]);
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(r2); <span class="pl-c">// [1, 4, 9]</span>
+
+<span class="pl-k">var</span> r3 <span class="pl-k">=</span> <span class="pl-c1">C</span>.<span class="pl-en">map</span>([<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>], <span class="pl-c1">5</span>, <span class="pl-k">function</span>(<span class="pl-smi">v</span>, <span class="pl-smi">i</span>, <span class="pl-smi">l</span>, <span class="pl-smi">a</span>) { <span class="pl-c">//val, idx, list, 5</span>
+    <span class="pl-k">return</span> <span class="pl-en">sum</span>(v, a);
+});
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(r3); <span class="pl-c">// [6, 7, 8]</span>
+
+<span class="pl-c">/* B.args는 들어온 인자중 원하는 번째의 인자를 선택하여 Multiple Results로 만듭니다. */</span>
+<span class="pl-k">var</span> r4 <span class="pl-k">=</span> <span class="pl-c1">C</span>.<span class="pl-en">map</span>([<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>], <span class="pl-c1">5</span>, [<span class="pl-c1">B</span>.<span class="pl-en">args</span>(<span class="pl-c1">0</span>, <span class="pl-c1">3</span>), sum]);
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(r4); <span class="pl-c">// [6, 7, 8]</span>
+
+<span class="pl-k">var</span> r6 <span class="pl-k">=</span>
+    <span class="pl-en">C</span>({ a<span class="pl-k">:</span> <span class="pl-c1">1</span>, b<span class="pl-k">:</span> <span class="pl-c1">2</span>, c<span class="pl-k">:</span> <span class="pl-c1">3</span> }, [
+        <span class="pl-c1">B</span>.<span class="pl-en">map</span>(<span class="pl-c1">I</span>), <span class="pl-c">// [1, 2, 3] // function I(v) { return v; }</span>
+        <span class="pl-c1">B</span>.<span class="pl-en">map</span>(square), <span class="pl-c">// [1, 4, 9]</span>
+        <span class="pl-k">function</span>(<span class="pl-smi">v</span>) { <span class="pl-k">return</span> <span class="pl-en">MR</span>(v, <span class="pl-c1">0</span>); },
+        <span class="pl-c1">B</span>.<span class="pl-en">reduce</span>(<span class="pl-k">function</span>(<span class="pl-smi">memo</span>, <span class="pl-smi">v</span>) {
+            <span class="pl-k">return</span> memo <span class="pl-k">+</span> v;
+        })]);
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(r6); <span class="pl-c">// 14</span>
+
+<span class="pl-k">var</span> <span class="pl-en">minus</span> <span class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) {
+    <span class="pl-k">return</span> a <span class="pl-k">-</span> b;
+};
+
+<span class="pl-en">C</span>({ a<span class="pl-k">:</span> <span class="pl-c1">1</span>, b<span class="pl-k">:</span> <span class="pl-c1">2</span>, c<span class="pl-k">:</span> <span class="pl-c1">3</span> }, [
+    <span class="pl-c1">B</span>.<span class="pl-en">map</span>(<span class="pl-c1">I</span>), <span class="pl-c">// [1, 2, 3]</span>
+    <span class="pl-c1">B</span>.<span class="pl-en">map</span>(square), <span class="pl-c">// [1, 4, 9]</span>
+    <span class="pl-k">function</span>(<span class="pl-smi">v</span>) { <span class="pl-k">return</span> <span class="pl-en">MR</span>(v, <span class="pl-c1">0</span>); },
+    <span class="pl-c1">B</span>.<span class="pl-en">reduce</span>([<span class="pl-c1">B</span>.<span class="pl-en">args</span>(<span class="pl-c1">0</span>, <span class="pl-c1">1</span>), minus]), <span class="pl-c">// 동기</span>
+    <span class="pl-k">function</span>(<span class="pl-smi">r7</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(r7); <span class="pl-c">// -14</span>
+    }]);
+
+<span class="pl-k">var</span> minus2 <span class="pl-k">=</span> <span class="pl-en">CB</span>(<span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>, <span class="pl-smi">cb</span>) {
+    <span class="pl-en">delay</span>(<span class="pl-k">function</span>() {
+        <span class="pl-en">cb</span>(a <span class="pl-k">-</span> b);
+    });
+});</pre></div>
+
+<p>비동기 함수가 있어도 코딩 패턴을 바꾸지 않고 편하게 코딩할 수 있습니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">C</span>({ a<span class="pl-k">:</span> <span class="pl-c1">1</span>, b<span class="pl-k">:</span> <span class="pl-c1">2</span>, c<span class="pl-k">:</span> <span class="pl-c1">3</span> }, [
+    <span class="pl-c1">B</span>.<span class="pl-en">map</span>(<span class="pl-c1">I</span>), <span class="pl-c">// [1, 2, 3]</span>
+    <span class="pl-c1">B</span>.<span class="pl-en">map</span>(square), <span class="pl-c">// [1, 4, 9]</span>
+    <span class="pl-k">function</span>(<span class="pl-smi">v</span>) { <span class="pl-k">return</span> <span class="pl-en">MR</span>(v, <span class="pl-c1">0</span>); },
+    <span class="pl-c1">B</span>.<span class="pl-en">reduce</span>([<span class="pl-c1">B</span>.<span class="pl-en">args</span>(<span class="pl-c1">0</span>, <span class="pl-c1">1</span>), minus2]), <span class="pl-c">// 비동기</span>
+    <span class="pl-k">function</span>(<span class="pl-smi">r7</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(r7); <span class="pl-c">// -14</span>
+    }]);
+
+<span class="pl-k">var</span> users <span class="pl-k">=</span> [
+    { id<span class="pl-k">:</span> <span class="pl-c1">1</span>, age<span class="pl-k">:</span> <span class="pl-c1">20</span>, activated<span class="pl-k">:</span> <span class="pl-c1">true</span>  },
+    { id<span class="pl-k">:</span> <span class="pl-c1">2</span>, age<span class="pl-k">:</span> <span class="pl-c1">20</span>, activated<span class="pl-k">:</span> <span class="pl-c1">false</span> },
+    { id<span class="pl-k">:</span> <span class="pl-c1">3</span>, age<span class="pl-k">:</span> <span class="pl-c1">31</span>, activated<span class="pl-k">:</span> <span class="pl-c1">false</span> },
+    { id<span class="pl-k">:</span> <span class="pl-c1">4</span>, age<span class="pl-k">:</span> <span class="pl-c1">32</span>, activated<span class="pl-k">:</span> <span class="pl-c1">true</span> },
+    { id<span class="pl-k">:</span> <span class="pl-c1">5</span>, age<span class="pl-k">:</span> <span class="pl-c1">17</span>, activated<span class="pl-k">:</span> <span class="pl-c1">true</span> },
+    { id<span class="pl-k">:</span> <span class="pl-c1">6</span>, age<span class="pl-k">:</span> <span class="pl-c1">32</span>, activated<span class="pl-k">:</span> <span class="pl-c1">true</span> }
+];
+
+<span class="pl-en">C</span>(users, [
+    <span class="pl-c1">B</span>.<span class="pl-en">filter</span>(<span class="pl-c1">B</span>.<span class="pl-en">V</span>(<span class="pl-s"><span class="pl-pds">'</span>activated<span class="pl-pds">'</span></span>)),
+    <span class="pl-c1">B</span>.<span class="pl-en">reject</span>(<span class="pl-k">function</span>(<span class="pl-smi">user</span>) {
+        <span class="pl-k">return</span> <span class="pl-smi">user</span>.<span class="pl-smi">age</span> <span class="pl-k">&gt;</span> <span class="pl-c1">30</span>;
+    }),
+    <span class="pl-c1">B</span>.<span class="pl-en">map</span>(<span class="pl-c1">B</span>.<span class="pl-en">V</span>(<span class="pl-s"><span class="pl-pds">'</span>age<span class="pl-pds">'</span></span>)),
+    <span class="pl-k">function</span>(<span class="pl-smi">r8</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(r8); <span class="pl-c">// [20, 17]</span>
+    }]);
+
+<span class="pl-en">C</span>(users, [
+    <span class="pl-c1">B</span>.<span class="pl-en">uniq</span>(<span class="pl-s"><span class="pl-pds">'</span>age<span class="pl-pds">'</span></span>),
+    <span class="pl-c1">B</span>.<span class="pl-en">map</span>(<span class="pl-c1">B</span>.<span class="pl-en">V</span>(<span class="pl-s"><span class="pl-pds">'</span>id<span class="pl-pds">'</span></span>)),
+    <span class="pl-k">function</span>(<span class="pl-smi">r9</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(r9); <span class="pl-c">// [1, 3, 4, 5]</span>
+    }]);
+
+<span class="pl-en">C</span>(users, [
+    <span class="pl-c1">G</span>[<span class="pl-s"><span class="pl-pds">"</span>:reject :age &gt; 30<span class="pl-pds">"</span></span>] <span class="pl-k">=</span> <span class="pl-c1">B</span>.<span class="pl-en">reject</span>(<span class="pl-k">function</span>(<span class="pl-smi">user</span>) {
+        <span class="pl-k">return</span> <span class="pl-smi">user</span>.<span class="pl-smi">age</span> <span class="pl-k">&gt;</span> <span class="pl-c1">30</span>;
+    }),
+    <span class="pl-c1">B</span>.<span class="pl-en">every</span>(<span class="pl-c1">B</span>.<span class="pl-en">V</span>(<span class="pl-s"><span class="pl-pds">'</span>activated<span class="pl-pds">'</span></span>)),
+    <span class="pl-k">function</span>(<span class="pl-smi">r10</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(r10); <span class="pl-c">// false</span>
+    }]);
+
+<span class="pl-en">C</span>(users, [
+    <span class="pl-c1">G</span>[<span class="pl-s"><span class="pl-pds">"</span>:reject :age &gt; 30<span class="pl-pds">"</span></span>],
+    <span class="pl-c1">B</span>.<span class="pl-en">some</span>(<span class="pl-c1">B</span>.<span class="pl-en">V</span>(<span class="pl-s"><span class="pl-pds">'</span>activated<span class="pl-pds">'</span></span>)),
+    <span class="pl-k">function</span>(<span class="pl-smi">r11</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(r11); <span class="pl-c">// true</span>
+    }]);</pre></div>
+
+<p>array, object, [object, object, object] 등을 편하게 다룰 수 있는 유용한 함수들입니다.
+<code>C.each</code>, <code>C.map</code>, <code>C.reduce</code>, <code>C.filter</code>, <code>C.reject</code>, <code>C.find</code>, <code>C.find_index</code>, <code>C.some</code>, <code>C.every</code>, <code>C.uniq</code>,
+<code>B.each</code>, <code>map</code>, <code>B.reduce</code>, <code>B.filter</code>, <code>B.reject</code>, <code>B.find</code>, <code>B.find_index</code>, <code>B.some</code>, <code>B.every</code>, <code>B.uniq</code></p>
+
+<h3>
+<a id="08-html-template" class="anchor" href="#08-html-template" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>08. <a href="https://github.com/marpple/abc-functional-javascript/blob/master/example/08.%20HTML%20Template.html">HTML Template</a>
+</h3>
+
+<p>abcjs에는 html을 효율적으로 만들 수 있는 template 함수인 <code>H</code>, <code>H.each</code>, 일반 문자열을 효율적으로 만들 수 있는 <code>S</code>, <code>S.each</code>가 있습니다.
+<code>H</code>, <code>H.each</code>, <code>S</code>, <code>S.each</code>는 모두 비동기 제어를 지원하고 abcjs의 다른 함수들과 함께 사용하기 좋습니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">C</span>([
+    <span class="pl-en">H</span>(<span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>\</span>
+<span class="pl-s">        .member[style="border: 1px solid #000; padding: 20px;"]\</span>
+<span class="pl-s">            h3 People\</span>
+<span class="pl-s">            ul\</span>
+<span class="pl-s">                li Cojamm\</span>
+<span class="pl-s">                li BJ\</span>
+<span class="pl-s">                li JM\</span>
+<span class="pl-s">                li PJ\</span>
+<span class="pl-s">                li HA\</span>
+<span class="pl-s">                li JE\</span>
+<span class="pl-s">        #id1.class1.class2[class=class3] hi\</span>
+<span class="pl-s">        .service\</span>
+<span class="pl-s">            a[href=http://www.marpple.com target=_blank] http://www.marpple.com\</span>
+<span class="pl-s">        textarea[rows=10].\</span>
+<span class="pl-s">            Custom T-Shirts\</span>
+<span class="pl-s">            \</span>
+<span class="pl-s">            \</span>
+<span class="pl-s">            Design Platform\</span>
+<span class="pl-s">            Artwork\</span>
+<span class="pl-s">        br\</span>
+<span class="pl-s">/*          br\</span>
+<span class="pl-s">        br*/\</span>
+<span class="pl-s">//            p hi\</span>
+<span class="pl-s">        p hello\</span>
+<span class="pl-s">//            br\</span>
+<span class="pl-s">        textarea\</span>
+<span class="pl-s">            | foo bar\</span>
+<span class="pl-s">            | hello world<span class="pl-pds">'</span></span>),
+    $,
+    <span class="pl-c1">B</span>.<span class="pl-en">M</span>(<span class="pl-s"><span class="pl-pds">'</span>appendTo<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>body<span class="pl-pds">'</span></span>)]);
+
+
+<span class="pl-en">hr</span>();</pre></div>
+
+<p><strong>참고 - 주석은 반드시 맨 앞줄에서 시작되어야합니다.</strong></p>
+
+<p>H-S의 특징</p>
+
+<ol>
+<li>H-S는 js내에서 사용하기위해 만들어졌습니다. 짧게 작성할 수 있게 하기 위해 jade의 문법과 닮았습니다.</li>
+<li>jade보다 더욱 css 문법과 동일합니다.</li>
+<li>javascript 함수 사용이 편리합니다.</li>
+<li>
+<code>""</code>,<code>''</code> 등을 생략할 수 있어 문자열을 다루는데 좀더 편리합니다.</li>
+<li>handlebars 등의 helper 보다 더욱 편리하게 template을 위한 함수를 만들 수 있습니다.</li>
+</ol>
+
+<p>데이터 치환</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">C</span>({ name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Cojamm<span class="pl-pds">'</span></span>, age<span class="pl-k">:</span> <span class="pl-c1">32</span> }, [
+  <span class="pl-en">H</span>(<span class="pl-s"><span class="pl-pds">'</span>user<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>\</span>
+<span class="pl-s">      .person\</span>
+<span class="pl-s">          .name {{user.name}}\</span>
+<span class="pl-s">          .age {{user.age}}<span class="pl-pds">'</span></span>),
+  $,
+  <span class="pl-c1">B</span>.<span class="pl-en">M</span>(<span class="pl-s"><span class="pl-pds">'</span>appendTo<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>body<span class="pl-pds">'</span></span>)]);
+
+<span class="pl-en">hr</span>();
+
+<span class="pl-k">var</span> post <span class="pl-k">=</span> {
+    body<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>&lt;em&gt;하이&lt;/em&gt; &lt;a href="https://www.youtube.com/watch?v=4tdOzlB6I7w" target="_blank"&gt;랩이나 잘하라고&lt;/a&gt;<span class="pl-pds">'</span></span>,
+    name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Cojamm<span class="pl-pds">'</span></span>,
+    created_at<span class="pl-k">:</span> <span class="pl-k">new</span> <span class="pl-en">Date</span>()
+};
+
+<span class="pl-en">C</span>(post, [
+    <span class="pl-en">H</span>(<span class="pl-s"><span class="pl-pds">'</span>post<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>\</span>
+<span class="pl-s">        .name 글쓴이: {{post.name}}\</span>
+<span class="pl-s">        .body 내용: {{post.body}}\</span>
+<span class="pl-s">        .created_at 시간: {{post.created_at}}<span class="pl-pds">'</span></span>),
+    $,
+    <span class="pl-c1">B</span>.<span class="pl-en">M</span>(<span class="pl-s"><span class="pl-pds">'</span>appendTo<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>body<span class="pl-pds">'</span></span>)]);
+
+<span class="pl-en">hr</span>();
+
+<span class="pl-k">delete</span> <span class="pl-smi">post</span>.<span class="pl-c1">name</span>;
+
+<span class="pl-c1">window</span>.<span class="pl-smi">moment_lll</span> <span class="pl-k">=</span> <span class="pl-en">B</span>([moment, <span class="pl-c1">B</span>.<span class="pl-en">M</span>(<span class="pl-s"><span class="pl-pds">'</span>format<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>lll<span class="pl-pds">'</span></span>)]);
+
+<span class="pl-en">C</span>(post, [
+    <span class="pl-en">H</span>(<span class="pl-s"><span class="pl-pds">'</span>post<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>\</span>
+<span class="pl-s">        .name 글쓴이: {{post.name || "익명"}}\</span>
+<span class="pl-s">        .body 내용: {{{post.body}}}\</span>
+<span class="pl-s">        .created_at 시간: {{moment_lll(post.created_at)}}<span class="pl-pds">'</span></span>),
+    $,
+    <span class="pl-c1">B</span>.<span class="pl-en">M</span>(<span class="pl-s"><span class="pl-pds">'</span>appendTo<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>body<span class="pl-pds">'</span></span>)]);
+
+<span class="pl-en">hr</span>();</pre></div>
+
+<p><code>H</code>의 인자를 여러개를 넘기면 template 문자열을 합치는데 그중 함수를 넣어 함수를 실행 시킬 수 있습니다.
+복잡한 로직은 함수로 빼서 구현 할 수 있습니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> songs <span class="pl-k">=</span> [
+    <span class="pl-s"><span class="pl-pds">'</span>The Riddle Of The Model<span class="pl-pds">'</span></span>,
+    <span class="pl-s"><span class="pl-pds">'</span>Up<span class="pl-pds">'</span></span>,
+    <span class="pl-s"><span class="pl-pds">'</span>To Find You<span class="pl-pds">'</span></span>,
+    <span class="pl-s"><span class="pl-pds">'</span>A Beautiful Sea<span class="pl-pds">'</span></span>,
+    <span class="pl-s"><span class="pl-pds">'</span>Drive It Like You Stole It<span class="pl-pds">'</span></span>,
+    <span class="pl-s"><span class="pl-pds">'</span>Up (Bedroom Mix)<span class="pl-pds">'</span></span>,
+    <span class="pl-s"><span class="pl-pds">'</span>Girls<span class="pl-pds">'</span></span>,
+    <span class="pl-s"><span class="pl-pds">'</span>Brown Shoes<span class="pl-pds">'</span></span>];
+
+<span class="pl-en">C</span>(songs, [
+    <span class="pl-en">H</span>(<span class="pl-s"><span class="pl-pds">'</span>songs<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>\</span>
+<span class="pl-s">        h3 Sing Street OST\</span>
+<span class="pl-s">        ul\</span>
+<span class="pl-s">            {{{C(songs, <span class="pl-pds">'</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">songs</span>) {
+                <span class="pl-k">return</span> <span class="pl-smi">_</span>.<span class="pl-en">map</span>(songs, <span class="pl-k">function</span>(<span class="pl-smi">song</span>, <span class="pl-smi">i</span>) {
+                    <span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">'</span>&lt;li&gt;<span class="pl-pds">'</span></span> <span class="pl-k">+</span> (i<span class="pl-k">+</span><span class="pl-c1">1</span>) <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">'</span>. <span class="pl-pds">'</span></span> <span class="pl-k">+</span> song <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">'</span>&lt;/li&gt;<span class="pl-pds">'</span></span>;
+                }).<span class="pl-c1">join</span>(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>);
+            },<span class="pl-s"><span class="pl-pds">'</span>)}}}<span class="pl-pds">'</span></span>),
+    $,
+    <span class="pl-c1">B</span>.<span class="pl-en">M</span>(<span class="pl-s"><span class="pl-pds">'</span>appendTo<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>body<span class="pl-pds">'</span></span>)]);
+
+<span class="pl-en">hr</span>();</pre></div>
+
+<p>위와 같이 익명함수를 선언하여 사용할수도 있습니다. 쉼표가 중요합니다. <code>{{C(a, ', function() {},')}}</code></p>
+
+<p><code>H.each</code>, <code>S.each</code></p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">C</span>(songs, [
+    <span class="pl-en">H</span>(<span class="pl-s"><span class="pl-pds">'</span>songs<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>\</span>
+<span class="pl-s">        h3 Sing Street OST\</span>
+<span class="pl-s">        ul\</span>
+<span class="pl-s">            !{C(songs, <span class="pl-pds">'</span></span>, <span class="pl-c1">S</span>.<span class="pl-en">each</span>(<span class="pl-s"><span class="pl-pds">'</span>song, i<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>\</span>
+<span class="pl-s">                li {{i+1}}. {{song}}<span class="pl-pds">'</span></span>),
+            <span class="pl-s"><span class="pl-pds">'</span>)}!<span class="pl-pds">'</span></span>),
+    $,
+    <span class="pl-c1">B</span>.<span class="pl-en">M</span>(<span class="pl-s"><span class="pl-pds">'</span>appendTo<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>body<span class="pl-pds">'</span></span>)]);
+
+
+<span class="pl-en">hr</span>();</pre></div>
+
+<p>템플릿 동작 순서</p>
+
+<ol>
+<li>
+<code>!{}!</code> 실행 및 데이터 치환, 리턴 값을 H 문법으로 하고 싶을때</li>
+<li>H to HTML</li>
+<li>
+<code>{{{}}}</code> 실행 및 데이터 치환, 리턴 값을 HTML로 만들고 싶을때</li>
+<li>
+<code>{{}}</code> 실행 및 데이터 치환, 리턴 값이 일반 문자열이어야 함
+<code>!{}!</code>, <code>{{}}</code>, <code>{{{}}}</code> 의 실행결과가 <code>.then</code> 인 경우 비동기를 기다렸다가 완성합니다.</li>
+</ol>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> sum <span class="pl-k">=</span> <span class="pl-en">CB</span>(<span class="pl-k">function</span> (<span class="pl-smi">a</span>, <span class="pl-smi">b</span>, <span class="pl-smi">cb</span>) {
+    <span class="pl-en">delay</span>(<span class="pl-k">function</span>() {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(a <span class="pl-k">+</span> b);
+        <span class="pl-en">cb</span>(a <span class="pl-k">+</span> b);
+    });
+});
+
+<span class="pl-en">C</span>(songs, [
+    <span class="pl-en">H</span>(<span class="pl-s"><span class="pl-pds">'</span>songs<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>\</span>
+<span class="pl-s">        h3 Sing Street OST\</span>
+<span class="pl-s">        ul\</span>
+<span class="pl-s">            {{{C(songs, <span class="pl-pds">'</span></span>, <span class="pl-c1">H</span>.<span class="pl-en">each</span>(<span class="pl-s"><span class="pl-pds">'</span>song, i<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>\</span>
+<span class="pl-s">                li {{C(i, 1, sum)}}. {{song}}<span class="pl-pds">'</span></span>), <span class="pl-c">// delay</span>
+            <span class="pl-s"><span class="pl-pds">'</span>)}}}<span class="pl-pds">'</span></span>),
+    $,
+    <span class="pl-c1">B</span>.<span class="pl-en">M</span>(<span class="pl-s"><span class="pl-pds">'</span>appendTo<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>body<span class="pl-pds">'</span></span>), <span class="pl-c">// 2초 뒤 렌더링</span>
+    <span class="pl-k">function</span>() {
+        <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">"</span>html, body<span class="pl-pds">"</span></span>).<span class="pl-c1">animate</span>({ scrollTop<span class="pl-k">:</span> <span class="pl-en">$</span>(<span class="pl-c1">window</span>).<span class="pl-en">scrollTop</span>() <span class="pl-k">+</span> <span class="pl-en">$</span>(<span class="pl-c1">window</span>).<span class="pl-c1">height</span>() });
+    }]);</pre></div>
+
+<p><code>S</code>는 일반 문자열을 만들때 사용합니다. <code>S</code>와 <code>S.each</code>가 있습니다.
+<code>H</code>, <code>H.each</code>는 HTML로 변환하여 리턴하고 <code>S</code>, <code>S.each</code>는 데이터 치환만한 문자열을 리턴합니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">C</span>({ id<span class="pl-k">:</span> <span class="pl-c1">5</span>, body<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>foo bar<span class="pl-pds">"</span></span> }, [
+    <span class="pl-smi">_</span>.<span class="pl-smi">values</span>,
+    <span class="pl-c1">C</span>.<span class="pl-smi">toMR</span>,
+    <span class="pl-en">S</span>(<span class="pl-s"><span class="pl-pds">'</span>id, body<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">"</span>update posts set body = '{{body}}' where id = {{id}};<span class="pl-pds">"</span></span>),
+    <span class="pl-k">function</span>(<span class="pl-smi">query</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(query);
+    }]);</pre></div>
+
+<h3>
+<a id="09-if-elseif-else" class="anchor" href="#09-if-elseif-else" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>09. <a href="https://github.com/marpple/abc-functional-javascript/blob/master/example/09.%20IF%20ELSEIF%20ELSE.html">IF ELSEIF ELSE</a>
+</h3>
+
+<p>자바스크립트에서 조건문을 작성할때 함수를 실행할 수 있는데 만일 그 함수가 비동기 함수라면 그렇게 할 수 없고 굉장히 로직이 복잡해지고 코딩하기 어려워집니다.
+자바스크립트는 아래와 같이 코딩할 수 없어 이것을 자바스크립트의 단점으로 생각하기도 합니다.
+하지만 이것에는 목적이 있습니다. 자바스크립트는 이벤트 루프를 이용하여 Non-Blocking IO을 지원하기 위해 아래 같은 상황에서 비동기가 일어납니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">if</span> (<span class="pl-en">long_time</span>(<span class="pl-c1">1</span>)) {
+   <span class="pl-en">long_time</span>(<span class="pl-c1">2</span>);
+ } <span class="pl-k">else</span> <span class="pl-k">if</span> (<span class="pl-en">long_time</span>(<span class="pl-c1">3</span>)) {
+   <span class="pl-en">long_time</span>(<span class="pl-c1">4</span>);
+ } <span class="pl-k">else</span> {
+   <span class="pl-en">long_time</span>(<span class="pl-c1">5</span>);
+ }</pre></div>
+
+<p><code>long_time()</code> 함수의 return 값이 undefined 라면 위 코드는 long_time의 내부 구현과 관련 없이 무조건 <code>long_time(1)</code>과 <code>long_time(5)</code>만 실행될겁니다.</p>
+
+<p>abcjs는 비동기가 일어나는 상황에서도 위와 닮은 코딩을 할 수 있도록 <code>IF().ELSEIF().ELSE()</code> 를 지원합니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">IF</span>(
+   조건부 함수,
+   실행부 함수
+)</pre></div>
+
+<p><code>IF</code>와 <code>ELSEIF</code>는 첫번째 인자로 조건부 함수를 넘기고, 두번째 인자로 실행부 함수를 넘깁니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">IF</span>(
+   실행부 함수
+)</pre></div>
+
+<p>만약 위와 같이 실행부 함수만 넘길 경우 내부적으로 조건부 함수를 <code>function I(v) { return v; }</code> 로 채웁니다.</p>
+
+<p><code>ELSE</code>는 실행부 함수만 넘깁니다.</p>
+
+<p>조건부 함수와 실행부 함수 모두 []로 파이프라인을 만들 수 있습니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">IF</span>([p1, p2, p3], [f1, f2, f3])</pre></div>
+
+<p><code>IF().ELSEIF().ELSE()</code>는 chain 방식으로 function 하나를 리턴합니다. 조건부와 실행부 함수에게 최초 받은 인자들을 넘겨줍니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">function</span> <span class="pl-en">f1</span>() {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>f1<span class="pl-pds">'</span></span>)
+    }
+
+    <span class="pl-k">function</span> <span class="pl-en">f2</span>() {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>f2<span class="pl-pds">'</span></span>)
+    }
+
+    <span class="pl-en">C</span>(<span class="pl-c1">true</span>, <span class="pl-en">IF</span>(f1).<span class="pl-en">ELSE</span>(f2));
+    <span class="pl-c">// f1</span>
+
+    <span class="pl-en">C</span>(<span class="pl-c1">false</span>, <span class="pl-en">IF</span>(f1).<span class="pl-en">ELSE</span>(f2));
+    <span class="pl-c">// f2</span>
+
+    <span class="pl-en">C</span>(<span class="pl-c1">0</span>,
+        <span class="pl-en">IF</span>(f1)
+        .<span class="pl-en">ELSEIF</span>(<span class="pl-k">function</span>(<span class="pl-smi">v</span>) { <span class="pl-k">return</span> v <span class="pl-k">===</span> <span class="pl-c1">0</span> },
+            <span class="pl-k">function</span>(<span class="pl-smi">v</span>) {
+                <span class="pl-en">console</span>.<span class="pl-c1">log</span>(v);
+            })
+        .<span class="pl-en">ELSE</span>(f2));
+    <span class="pl-c">// 0</span>
+
+    <span class="pl-en">C</span>(<span class="pl-c1">5</span>, <span class="pl-c1">0</span>,
+        <span class="pl-en">IF</span>(<span class="pl-c1">I</span>, f1 <span class="pl-c">// function I(v) { return v };</span>
+        ).<span class="pl-en">ELSEIF</span>(<span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) { <span class="pl-k">return</span> a <span class="pl-k">&lt;</span> b },
+            <span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) { <span class="pl-en">console</span>.<span class="pl-c1">log</span>(a); }
+        ).<span class="pl-en">ELSE</span>(f2));
+    <span class="pl-c">// f1</span>
+
+    <span class="pl-en">C</span>(<span class="pl-c1">0</span>, <span class="pl-c1">5</span>,
+        <span class="pl-en">IF</span>(<span class="pl-c1">I</span>, f1
+        ).<span class="pl-en">ELSEIF</span>(<span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) { <span class="pl-k">return</span> a <span class="pl-k">&gt;</span> b },
+            <span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) { <span class="pl-en">console</span>.<span class="pl-c1">log</span>(a); }
+        ).<span class="pl-en">ELSE</span>(f2));
+    <span class="pl-c">// f2</span>
+
+    <span class="pl-en">C</span>(<span class="pl-c1">0</span>, <span class="pl-c1">5</span>,
+        <span class="pl-en">IF</span>(<span class="pl-c1">I</span>, f1
+        ).<span class="pl-en">ELSEIF</span>(<span class="pl-smi">_</span>.<span class="pl-en">negate</span>(<span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) { <span class="pl-k">return</span> a <span class="pl-k">&gt;</span> b }),
+            <span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) { <span class="pl-en">console</span>.<span class="pl-c1">log</span>(a<span class="pl-k">+</span>b); }
+        ).<span class="pl-en">ELSE</span>(f2));
+    <span class="pl-c">// 5</span></pre></div>
+
+<p>비동기 조건문</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c1">G</span>[<span class="pl-s"><span class="pl-pds">"</span>a &lt; b long time<span class="pl-pds">"</span></span>] <span class="pl-k">=</span> <span class="pl-en">CB</span>(<span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>, <span class="pl-smi">cb</span>) {
+    <span class="pl-c1">setTimeout</span>(<span class="pl-k">function</span>() {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>1 sec<span class="pl-pds">'</span></span>);
+        <span class="pl-c1">setTimeout</span>(<span class="pl-k">function</span>() {
+            <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>2 sec<span class="pl-pds">'</span></span>);
+            <span class="pl-en">cb</span>(a <span class="pl-k">&lt;</span> b);
+        }, <span class="pl-c1">1000</span>)
+    }, <span class="pl-c1">1000</span>);
+});
+
+<span class="pl-en">C</span>(<span class="pl-c1">0</span>, <span class="pl-c1">5</span>,
+    <span class="pl-en">IF</span>(<span class="pl-c1">I</span>, f1
+    ).<span class="pl-en">ELSEIF</span>(<span class="pl-c1">G</span>[<span class="pl-s"><span class="pl-pds">"</span>a &lt; b long time<span class="pl-pds">"</span></span>],
+        <span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) { <span class="pl-en">console</span>.<span class="pl-c1">log</span>(a<span class="pl-k">+</span>b); }
+    ).<span class="pl-en">ELSE</span>(f2));
+<span class="pl-c">// 5</span></pre></div>
+
+<p>실행부 역시 비동기제어가 가능하고 배열을 통해 파이프라인으로 만들 수 있습니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> square_long_time <span class="pl-k">=</span> <span class="pl-en">CB</span>(<span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">cb</span>) {
+    <span class="pl-c1">setTimeout</span>(<span class="pl-k">function</span>() {
+        <span class="pl-en">cb</span>(a <span class="pl-k">*</span> a);
+    }, <span class="pl-c1">1000</span>);
+});
+
+<span class="pl-en">C</span>(<span class="pl-c1">0</span>, <span class="pl-c1">5</span>, [
+    <span class="pl-en">IF</span>(<span class="pl-c1">I</span>, f1
+    ).<span class="pl-en">ELSEIF</span>(<span class="pl-c1">G</span>[<span class="pl-s"><span class="pl-pds">"</span>a &lt; b long time<span class="pl-pds">"</span></span>],
+        [<span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) { <span class="pl-k">return</span> a <span class="pl-k">+</span> b; },
+        square_long_time]
+    ).<span class="pl-en">ELSE</span>(f2),
+    <span class="pl-k">function</span>(<span class="pl-smi">a</span>) {
+        <span class="pl-k">return</span> a <span class="pl-k">+</span> <span class="pl-c1">10</span>;
+    },
+    <span class="pl-k">function</span>(<span class="pl-smi">r</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(r);
+        <span class="pl-c">// 35</span>
+    }]);</pre></div>
+
+<p>abcjs를 이용하여 함수형 프로그래밍을 하면 비동기가 지원되는 <code>IF().ELSEIF().ELSE()</code> 같은 함수도 아래와 같이 쉽게 만들 수 있습니다.</p>
+
+<ol>
+<li>최초 <code>IF</code>를 실행하면 <code>store</code>를 클로저로 생성하고</li>
+<li>chain 방식으로 이후에 <code>ELSEIF</code>와 <code>ELSE</code>가 실행 될때 마다 function set를 <code>store</code>에 모아놓고</li>
+<li>리턴된 <code>IF</code>가 실행될때 <code>B.find</code>를 통해 실행해야하는 function set를 찾아 받아둔 <code>args</code>를 넘기며 실행합니다.</li>
+</ol>
+
+<p>이미 <code>C</code>나 <code>B.find</code> 등이 이미 비동기를 잘 제어해주기 때문에 아래와 같이 callback 패턴 없이 동기 함수를 만들때와 완전히 똑같은 코딩을 할 수 있습니다.</p>
+
+<div class="highlight highlight-source-js"><pre> <span class="pl-c">// abc.js 459 line</span>
+ <span class="pl-k">function</span> <span class="pl-en">IF</span>(<span class="pl-smi">predicate</span>, <span class="pl-smi">fn</span>) {
+     <span class="pl-k">var</span> store <span class="pl-k">=</span> [fn <span class="pl-k">?</span> [predicate, fn] <span class="pl-k">:</span> [<span class="pl-c1">I</span>, predicate]];
+     <span class="pl-k">return</span> <span class="pl-smi">_</span>.<span class="pl-en">extend</span>(<span class="pl-c1">IF</span>, {
+         <span class="pl-en">ELSEIF</span><span class="pl-k">:</span> <span class="pl-k">function</span> (<span class="pl-smi">predicate</span>, <span class="pl-smi">fn</span>) {
+             <span class="pl-k">return</span> <span class="pl-smi">store</span>.<span class="pl-c1">push</span>(fn <span class="pl-k">?</span> [predicate, fn] <span class="pl-k">:</span> [<span class="pl-c1">I</span>, predicate]) <span class="pl-k">&amp;&amp;</span> <span class="pl-c1">IF</span>;
+         },
+         <span class="pl-en">ELSE</span><span class="pl-k">:</span> <span class="pl-k">function</span> (<span class="pl-smi">fn</span>) { <span class="pl-k">return</span> <span class="pl-smi">store</span>.<span class="pl-c1">push</span>([<span class="pl-en">J</span>(<span class="pl-c1">true</span>), fn]) <span class="pl-k">&amp;&amp;</span> <span class="pl-c1">IF</span>; } });
+
+     <span class="pl-k">function</span> <span class="pl-en">IF</span>() {
+         <span class="pl-k">var</span> args <span class="pl-k">=</span> <span class="pl-v">arguments</span>;
+         <span class="pl-k">return</span> <span class="pl-en">C</span>(store, args, [
+             <span class="pl-c1">B</span>.<span class="pl-c1">find</span>(<span class="pl-k">function</span>(<span class="pl-smi">fnset</span>, <span class="pl-smi">i</span>, <span class="pl-smi">l</span>, <span class="pl-smi">args</span>) { <span class="pl-k">return</span> <span class="pl-en">A</span>(args, fnset[<span class="pl-c1">0</span>]); }),
+             <span class="pl-k">function</span>(<span class="pl-smi">fnset</span>) { <span class="pl-k">return</span> fnset <span class="pl-k">?</span> <span class="pl-en">A</span>(args, fnset[<span class="pl-c1">1</span>]) <span class="pl-k">:</span> <span class="pl-k">void</span> <span class="pl-c1">0</span>; }
+         ]);
+     }
+ }</pre></div>
+
+<h3>
+<a id="10-ball-bdiv" class="anchor" href="#10-ball-bdiv" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>10. <a href="https://github.com/marpple/abc-functional-javascript/blob/master/example/09.%20IF%20ELSEIF%20ELSE.html">B.all B.div</a>
+</h3>
+
+<p><code>B.all</code> 함수는 같은 인자를 모든 파이프라인 혹은 함수에게 넘겨서 multiple results로 결과를 만드는 함수를 리턴합니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">C</span>(<span class="pl-c1">1</span>, <span class="pl-c1">5</span>, [
+    <span class="pl-c1">B</span>.<span class="pl-c1">all</span>(
+        <span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) { <span class="pl-k">return</span> a <span class="pl-k">+</span> b; }, <span class="pl-c">// a</span>
+
+        [<span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) { <span class="pl-k">return</span> a <span class="pl-k">-</span> b; },
+        <span class="pl-k">function</span>(<span class="pl-smi">a</span>) { <span class="pl-k">return</span> a <span class="pl-k">*</span> a; }],  <span class="pl-c">// b</span>
+
+        <span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) { <span class="pl-k">return</span> <span class="pl-en">MR</span>(a, b); }  <span class="pl-c">// c, d (multiple results)</span>
+    ),
+    <span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>, <span class="pl-smi">c</span>, <span class="pl-smi">d</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(a, b, c, d); <span class="pl-c">// 6, 16, 1, 5</span>
+    }]);</pre></div>
+
+<p><code>B.div</code> 함수는 인자를 하나씩 모든 파이프라인 혹은 함수에게 나눠주고 multiple results로 결과를 만드는 함수를 리턴합니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">C</span>(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>, <span class="pl-c1">4</span>, [
+    <span class="pl-c1">B</span>.<span class="pl-en">div</span>(
+        <span class="pl-k">function</span>(<span class="pl-smi">a</span>) { <span class="pl-k">return</span> a <span class="pl-k">+</span> a; }, <span class="pl-c">// a</span>
+
+        [<span class="pl-k">function</span>(<span class="pl-smi">a</span>) { <span class="pl-k">return</span> a <span class="pl-k">+</span> a; },
+        <span class="pl-k">function</span>(<span class="pl-smi">a</span>) { <span class="pl-k">return</span> a <span class="pl-k">*</span> a; }], <span class="pl-c">// b</span>
+
+        <span class="pl-k">function</span>(<span class="pl-smi">a</span>) { <span class="pl-k">return</span> <span class="pl-en">MR</span>(a, a <span class="pl-k">-</span> a); }  <span class="pl-c">// c, d (multiple results)</span>
+
+        <span class="pl-c">// e ** 인자수보다 function의 갯수가 적을 경우 I로 채웁니다. function I(v) { return v }</span>
+    ),
+    <span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>, <span class="pl-smi">c</span>, <span class="pl-smi">d</span>, <span class="pl-smi">e</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(a, b, c, d, e); <span class="pl-c">// 2, 16, 3, 0, 4</span>
+    }]);
+
+<span class="pl-en">C</span>(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>, <span class="pl-c1">4</span>, [
+    <span class="pl-c1">B</span>.<span class="pl-en">div</span>(
+        <span class="pl-k">function</span>(<span class="pl-smi">a</span>) { <span class="pl-k">return</span> a <span class="pl-k">+</span> a; }, <span class="pl-c">// a</span>
+
+        [<span class="pl-k">function</span>(<span class="pl-smi">a</span>) { <span class="pl-k">return</span> a <span class="pl-k">+</span> a; },
+        <span class="pl-k">function</span>(<span class="pl-smi">a</span>) { <span class="pl-k">return</span> a <span class="pl-k">*</span> a; }], <span class="pl-c">// b</span>
+
+        <span class="pl-k">function</span>(<span class="pl-smi">a</span>) { <span class="pl-k">return</span> <span class="pl-en">MR</span>(a, a <span class="pl-k">-</span> a); }, <span class="pl-c">// c, d</span>
+
+        <span class="pl-c1">I</span>, <span class="pl-c">// e</span>
+        <span class="pl-c1">I</span>  <span class="pl-c">// f  ** 인자수보다 function의 갯수가 많을 경우 인자는 undefined로 들어옵니다.</span>
+    ),
+    <span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>, <span class="pl-smi">c</span>, <span class="pl-smi">d</span>, <span class="pl-smi">e</span>, <span class="pl-smi">f</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(a, b, c, d, e, f); <span class="pl-c">// 2, 16, 3, 0, 4, undefined</span>
+    }]);</pre></div>
+
+<p>결과를 배열로 받고 싶다면</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">C</span>(<span class="pl-c1">1</span>, <span class="pl-c1">5</span>, [
+    <span class="pl-c1">B</span>.<span class="pl-c1">all</span>(
+        <span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) { <span class="pl-k">return</span> a <span class="pl-k">+</span> b; }, <span class="pl-c">// a</span>
+
+        [<span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) { <span class="pl-k">return</span> a <span class="pl-k">-</span> b; },
+        <span class="pl-k">function</span>(<span class="pl-smi">a</span>) { <span class="pl-k">return</span> a <span class="pl-k">*</span> a; }],  <span class="pl-c">// b</span>
+
+        <span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) { <span class="pl-k">return</span> <span class="pl-en">MR</span>(a, b); }  <span class="pl-c">// c, d (multiple results)</span>
+    ),
+    <span class="pl-c1">C</span>.<span class="pl-smi">args</span>,
+    <span class="pl-c1">C</span>.<span class="pl-smi">toArray</span>,
+    <span class="pl-k">function</span>(<span class="pl-smi">a</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(a); <span class="pl-c">// [6, 16, 1, 5]</span>
+    }]);</pre></div>
+
+<p>Pipeline 패턴으로 코딩을 하다보면 <code>B.all</code>과 <code>B.div</code> 같은 일을 하고 싶을때가 많습니다.
+<code>B.all</code>과 <code>B.div</code>에게 넘겨진 함수 혹은 Pipeline들은 하나씩 차례대로 실행됩니다.
+비동기가 일어나더라도 위에서 부터 하나씩 차례대로 실행됩니다.</p>
+
+<h3>
+<a id="11-this" class="anchor" href="#11-this" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>11. <a href="https://github.com/marpple/abc-functional-javascript/blob/master/example/11.%20this.html">this</a>
+</h3>
+
+<p>A, B, C 모두 this가 주어진다면 파이프라인안의 모든 함수에서 this를 이어줍니다.</p>
+
+<h4>
+<a id="a-함수로-this-전달하기" class="anchor" href="#a-%ED%95%A8%EC%88%98%EB%A1%9C-this-%EC%A0%84%EB%8B%AC%ED%95%98%EA%B8%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>A 함수로 this 전달하기</h4>
+
+<p>A 함수에서는 마지막 인자로 this를 받을 수 있습니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> r1 <span class="pl-k">=</span> <span class="pl-en">A</span>([<span class="pl-c1">1</span>, <span class="pl-c1">2</span>], [
+    <span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) {
+        <span class="pl-k">return</span> a <span class="pl-k">+</span> b <span class="pl-k">+</span> <span class="pl-v">this</span>.<span class="pl-smi">c</span>;
+    },
+    <span class="pl-k">function</span>(<span class="pl-smi">a</span>) {
+        <span class="pl-k">return</span> a <span class="pl-k">*</span> <span class="pl-v">this</span>.<span class="pl-smi">c</span>;
+    }
+], { c<span class="pl-k">:</span> <span class="pl-c1">5</span> });
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(r1); <span class="pl-c">// 40</span></pre></div>
+
+<h4>
+<a id="b-함수로-this-전달하기" class="anchor" href="#b-%ED%95%A8%EC%88%98%EB%A1%9C-this-%EC%A0%84%EB%8B%AC%ED%95%98%EA%B8%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>B 함수로 this 전달하기</h4>
+
+<p>B 함수는 함수를 리턴하는 함수입니다. B를 실행하여 리턴된 함수에 context를 넘겨주셔야합니다.
+_.bind나 Function.prototype.bind 처럼 미리 this를 bind하는 기능은 없습니다.
+코어 자바스크립트에서의 this를 잘 이해하고 있다면 전혀 어렵지 않습니다.
+아래와 같은 케이스가 가능하겠습니다. 메소드 정의를 할때 유용합니다.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> user1 <span class="pl-k">=</span> {
+    firstName<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>jamm<span class="pl-pds">"</span></span>,
+    lastName<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Co<span class="pl-pds">"</span></span>,
+    getName1<span class="pl-k">:</span> <span class="pl-en">B</span>(<span class="pl-k">function</span>() {
+        <span class="pl-k">return</span> <span class="pl-v">this</span>.<span class="pl-smi">lastName</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">'</span> <span class="pl-pds">'</span></span> <span class="pl-k">+</span> <span class="pl-v">this</span>.<span class="pl-smi">firstName</span>;
+    }),
+    getName2<span class="pl-k">:</span> <span class="pl-en">B</span>([
+        <span class="pl-c1">B</span>.<span class="pl-c1">all</span>(<span class="pl-k">function</span>() {
+            <span class="pl-k">return</span> <span class="pl-v">this</span>.<span class="pl-smi">firstName</span>;
+        }, <span class="pl-k">function</span>() {
+            <span class="pl-k">return</span> <span class="pl-v">this</span>.<span class="pl-smi">lastName</span>;
+        }),
+        <span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) {
+            <span class="pl-k">return</span> a <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">'</span> <span class="pl-pds">'</span></span> <span class="pl-k">+</span> b;
+        }
+    ])
+};
+
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">user1</span>.<span class="pl-en">getName1</span>()); <span class="pl-c">// Co jamm</span>
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">user1</span>.<span class="pl-en">getName2</span>()); <span class="pl-c">// jamm Co</span>
+
+<span class="pl-k">var</span> same_age_friends <span class="pl-k">=</span> <span class="pl-en">B</span>([
+    <span class="pl-k">function</span>() {
+        <span class="pl-k">return</span> <span class="pl-v">this</span>.<span class="pl-smi">friends</span>;
+    },
+    <span class="pl-c1">B</span>.<span class="pl-en">filter</span>(<span class="pl-k">function</span>(<span class="pl-smi">friend</span>) { <span class="pl-k">return</span> <span class="pl-smi">friend</span>.<span class="pl-smi">age</span> <span class="pl-k">==</span> <span class="pl-v">this</span>.<span class="pl-smi">me</span>.<span class="pl-smi">age</span> })
+]);
+
+<span class="pl-k">var</span> r2 <span class="pl-k">=</span> <span class="pl-smi">same_age_friends</span>.<span class="pl-c1">call</span>({
+    friends<span class="pl-k">:</span> [
+        { id<span class="pl-k">:</span> <span class="pl-c1">1</span>, name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>a<span class="pl-pds">"</span></span>, age<span class="pl-k">:</span> <span class="pl-c1">10</span> },
+        { id<span class="pl-k">:</span> <span class="pl-c1">2</span>, name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>b<span class="pl-pds">"</span></span>, age<span class="pl-k">:</span> <span class="pl-c1">12</span> },
+        { id<span class="pl-k">:</span> <span class="pl-c1">3</span>, name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>c<span class="pl-pds">"</span></span>, age<span class="pl-k">:</span> <span class="pl-c1">12</span> },
+        { id<span class="pl-k">:</span> <span class="pl-c1">4</span>, name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>d<span class="pl-pds">"</span></span>, age<span class="pl-k">:</span> <span class="pl-c1">13</span> }
+    ],
+    me<span class="pl-k">:</span> { id<span class="pl-k">:</span> <span class="pl-c1">5</span>, name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>e<span class="pl-pds">"</span></span>, age<span class="pl-k">:</span> <span class="pl-c1">12</span> }
+});
+
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">JSON</span>.<span class="pl-en">stringify</span>(r2)); <span class="pl-c">// [{"id":2,"name":"b","age":12},{"id":3,"name":"c","age":12}]</span></pre></div>
+
+<h4>
+<a id="c-함수로-this-전달하기" class="anchor" href="#c-%ED%95%A8%EC%88%98%EB%A1%9C-this-%EC%A0%84%EB%8B%AC%ED%95%98%EA%B8%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>C 함수로 this 전달하기</h4>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> r3 <span class="pl-k">=</span> <span class="pl-c1">C</span>.<span class="pl-c1">call</span>({ c<span class="pl-k">:</span> <span class="pl-c1">5</span> }, <span class="pl-c1">1</span>, <span class="pl-c1">2</span>, [
+    <span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">b</span>) {
+        <span class="pl-k">return</span> a <span class="pl-k">+</span> b <span class="pl-k">+</span> <span class="pl-v">this</span>.<span class="pl-smi">c</span>;
+    },
+    <span class="pl-k">function</span>(<span class="pl-smi">a</span>) {
+        <span class="pl-k">return</span> a <span class="pl-k">*</span> <span class="pl-v">this</span>.<span class="pl-smi">c</span>;
+    }
+]);
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(r3); <span class="pl-c">// 40</span></pre></div>
+
+<h4>
+<a id="with-jquery" class="anchor" href="#with-jquery" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>with jQuery</h4>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">button</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>button<span class="pl-pds">"</span></span>&gt;go&lt;/<span class="pl-ent">button</span>&gt;</pre></div>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">$</span>(<span class="pl-k">function</span>() {
+    <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">'</span>button<span class="pl-pds">'</span></span>).<span class="pl-c1">click</span>(<span class="pl-en">B</span>([
+        <span class="pl-en">CB</span>(<span class="pl-k">function</span>(<span class="pl-smi">e</span>, <span class="pl-smi">next</span>) {
+            <span class="pl-k">return</span> <span class="pl-en">$</span>(<span class="pl-v">this</span>).<span class="pl-c1">animate</span>({
+                <span class="pl-s"><span class="pl-pds">'</span>margin-left<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-c1">300</span>
+            }, <span class="pl-c1">1000</span>, next);
+        }),
+        <span class="pl-k">function</span>() {
+            <span class="pl-en">$</span>(<span class="pl-v">this</span>).<span class="pl-c1">text</span>(<span class="pl-s"><span class="pl-pds">'</span>finish<span class="pl-pds">'</span></span>);
+        }
+    ]));
+});
+<span class="pl-c">// go --------------&gt; finish</span></pre></div>
+
+<h3>
+<a id="12-etc" class="anchor" href="#12-etc" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>12. ETC</h3>
+
+<p>이 외에도 abcjs에는 B.args, B.m, C.val, F, G, C.u, C.val 등의 유용한 함수들이 있습니다.</p>
+
+<ul>
+<li>
+<code>B.args(n[,n,n...])</code> index가 n인 인자들 받기</li>
+<li>
+<code>B.m('method', 'args1', 'args2')</code> 객체의 메소드 실행하는 함수 뱉기</li>
+<li>
+<code>F('function.name') =&gt; G['function']['name']</code> 안전하게 function 찾기</li>
+<li>
+<code>F.A</code>, <code>F.B</code>, <code>F.C</code>, ... F 네임스페이스에 모든 함수 재추가</li>
+<li><code>G = global || window</code></li>
+<li><code>C.u = function() {};</code></li>
+<li>
+<code>C.val(user, 'friend.friends.0.name')</code> 안전하게 value 꺼내기</li>
+</ul>
+
+<h3>
+<a id="13-throw-err-catch" class="anchor" href="#13-throw-err-catch" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>13. <a href="https://github.com/marpple/abc-functional-javascript/blob/master/example/13.%20CATCH.html">throw, ERR, CATCH</a>
+</h3>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">C</span>([
+    <span class="pl-k">function</span>() {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">1</span>);
+    },
+    <span class="pl-k">function</span>() {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">2</span>);
+        <span class="pl-k">throw</span> <span class="pl-c1">2</span>;
+    },
+    <span class="pl-k">function</span>() {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">3</span>);
+    },
+    <span class="pl-en">CATCH</span>(<span class="pl-k">function</span>(<span class="pl-smi">e</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">4</span>, e);
+    })]);
+<span class="pl-c">// 1</span>
+<span class="pl-c">// 2</span>
+<span class="pl-c">// 4, Error: 2(…)</span>
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>-------------------------<span class="pl-pds">'</span></span>);
+
+<span class="pl-en">C</span>([
+    <span class="pl-k">function</span>() {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">1</span>);
+    },
+    <span class="pl-k">function</span>() {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">2</span>);
+        <span class="pl-k">return</span> <span class="pl-en">ERR</span>(<span class="pl-c1">2</span>);
+    },
+    <span class="pl-k">function</span>() {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">3</span>);
+    },
+    <span class="pl-en">CATCH</span>(<span class="pl-k">function</span>(<span class="pl-smi">e</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">4</span>, e);
+    }),
+    <span class="pl-k">function</span>() {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">5</span>);
+    }]);
+<span class="pl-c">// 1</span>
+<span class="pl-c">// 2</span>
+<span class="pl-c">// 4, Error: 2(…)</span>
+<span class="pl-c">// 5</span>
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>-------------------------<span class="pl-pds">'</span></span>);
+
+<span class="pl-en">C</span>([
+    <span class="pl-k">function</span>() {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">1</span>);
+        <span class="pl-k">return</span> <span class="pl-en">ERR</span>(<span class="pl-s"><span class="pl-pds">'</span>custom data<span class="pl-pds">'</span></span>, {
+            type<span class="pl-k">:</span> <span class="pl-c1">1</span>,
+            msg<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>hi<span class="pl-pds">'</span></span>
+        });
+    },
+    <span class="pl-en">CATCH</span>(<span class="pl-k">function</span>(<span class="pl-smi">e</span>) {
+        <span class="pl-k">if</span> (<span class="pl-smi">e</span>.<span class="pl-c1">type</span> <span class="pl-k">==</span> <span class="pl-c1">1</span>) {
+            <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">e</span>.<span class="pl-smi">msg</span>, e);
+        } <span class="pl-k">else</span> {
+            <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>else<span class="pl-pds">'</span></span>);
+        }
+    })]);
+<span class="pl-c">// 1</span>
+<span class="pl-c">// hi Error: custom data(…)</span>
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>-------------------------<span class="pl-pds">'</span></span>);
+
+<span class="pl-en">C</span>([
+    <span class="pl-k">function</span>() {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">1</span>);
+    },
+    <span class="pl-k">function</span>() {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">2</span>);
+    },
+    <span class="pl-k">function</span>() {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">3</span>);
+    },
+    <span class="pl-en">CATCH</span>(<span class="pl-k">function</span>(<span class="pl-smi">e</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">4</span>, e);
+    }),
+    <span class="pl-k">function</span>() {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">5</span>);
+    }]);
+
+<span class="pl-c">// 1</span>
+<span class="pl-c">// 2</span>
+<span class="pl-c">// 3</span>
+<span class="pl-c">// 5</span>
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>-------------------------<span class="pl-pds">'</span></span>);
+
+<span class="pl-en">C</span>([
+    <span class="pl-k">function</span>() {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">1</span>);
+    },
+    <span class="pl-k">function</span>() {
+        <span class="pl-k">return</span> <span class="pl-en">C</span>([
+            <span class="pl-k">function</span>() {
+                <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">2</span>);
+            },
+            <span class="pl-k">function</span>() {
+                <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">3</span>);
+                <span class="pl-k">throw</span> <span class="pl-c1">3</span>
+            },
+            <span class="pl-k">function</span>() {
+                <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">4</span>);
+            },
+            <span class="pl-en">CATCH</span>(<span class="pl-k">function</span>(<span class="pl-smi">e</span>) {
+                <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">5</span>, e);
+            }),
+            <span class="pl-k">function</span>() {
+                <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">6</span>);
+            },
+            <span class="pl-k">function</span>() {
+                <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">7</span>);
+                <span class="pl-k">return</span> <span class="pl-en">ERR</span>(<span class="pl-c1">7</span>);
+            }
+        ])
+    },
+    <span class="pl-k">function</span>() {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">8</span>);
+    },
+    <span class="pl-en">CATCH</span>(<span class="pl-k">function</span>(<span class="pl-smi">e</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">9</span>, e);
+        <span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">'</span>hi<span class="pl-pds">'</span></span>
+    }),
+    <span class="pl-k">function</span>(<span class="pl-smi">a</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">10</span>, a);
+    }
+]);
+<span class="pl-c">// 1</span>
+<span class="pl-c">// 2</span>
+<span class="pl-c">// 3</span>
+<span class="pl-c">// 5 Error: 3(…)</span>
+<span class="pl-c">// 6</span>
+<span class="pl-c">// 7</span>
+<span class="pl-c">// 9 Error: 7(…)</span>
+<span class="pl-c">// 10 'hi'</span>
+
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>-------------------------<span class="pl-pds">'</span></span>);
+
+<span class="pl-c">// for async</span>
+<span class="pl-k">var</span> go <span class="pl-k">=</span> <span class="pl-en">B</span>([
+    <span class="pl-k">function</span>(<span class="pl-smi">a</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">1</span>);
+        <span class="pl-k">return</span> a;
+    },
+    <span class="pl-en">CB</span>(<span class="pl-k">function</span>(<span class="pl-smi">a</span>, <span class="pl-smi">next</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">2</span>);
+        <span class="pl-c1">setTimeout</span>(<span class="pl-k">function</span>() {
+            <span class="pl-en">next</span>(a <span class="pl-k">==</span> <span class="pl-c1">1</span> <span class="pl-k">?</span> <span class="pl-c1">2</span> <span class="pl-k">:</span> <span class="pl-en">ERR</span>(<span class="pl-c1">2</span>));
+        }, <span class="pl-c1">500</span>)
+    }),
+    <span class="pl-k">function</span>() {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">3</span>);
+    },
+    <span class="pl-k">function</span>() {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">4</span>);
+        <span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">'</span>complete<span class="pl-pds">'</span></span>;
+    },
+    <span class="pl-en">CB</span>(<span class="pl-en">CATCH</span>(<span class="pl-k">function</span>(<span class="pl-smi">e</span>, <span class="pl-smi">next</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">5</span>, e);
+        <span class="pl-c1">setTimeout</span>(<span class="pl-k">function</span>() {
+            <span class="pl-c">// rollback</span>
+            <span class="pl-en">next</span>(<span class="pl-s"><span class="pl-pds">'</span>fail<span class="pl-pds">'</span></span>);
+        }, <span class="pl-c1">1000</span>);
+    })),
+    <span class="pl-k">function</span>(<span class="pl-smi">a</span>) {
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(a);
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>------------------<span class="pl-pds">'</span></span>)
+    }
+]);
+
+<span class="pl-en">go</span>(<span class="pl-c1">1</span>).<span class="pl-en">then</span>(<span class="pl-k">function</span>() {
+    <span class="pl-c">// 1</span>
+    <span class="pl-c">// 2</span>
+    <span class="pl-c">// 3</span>
+    <span class="pl-c">// 4</span>
+    <span class="pl-c">// complete</span>
+
+    <span class="pl-en">go</span>(<span class="pl-c1">2</span>);
+    <span class="pl-c">// 1</span>
+    <span class="pl-c">// 2</span>
+    <span class="pl-c">// 5 Error: 2(…)</span>
+    <span class="pl-c">// fail</span>
+});</pre></div>
+
+<p><strong>이제 재밌는 함수 조립을 즐겨보세요! <g-emoji alias="smile" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f604.png">😄</g-emoji></strong></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/joeunha/abc-functional-javascript">ABC JS</a> is maintained by <a href="https://github.com/joeunha">joeunha</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
