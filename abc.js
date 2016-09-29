@@ -1,8 +1,14 @@
-// abc.js
-// https://github.com/marpple/abc-functional-javascript
-// (c) 2016 Marpple
-// abcjs may be freely distributed under the MIT license.
+// ABC project
+//  - https://github.com/marpple/abc-functional-javascript
+//  - https://github.com/marpple/abc-box
+// Project Lead - Indong Yoo
+// Maintainers - Piljung Park, Hanah Choi
+// Contributors - Byeongjin Kim, Joeun Ha, Hoonil Kim
 
+// abc.js, abc.box.js
+// (c) 2015-2016 Marpple. MIT Licensed.
+
+//-------------------- abc.js -----------------------
 !function(G) {
   var _ = respect_underscore({}), window = typeof window != 'object' ? G : window;
 
@@ -62,6 +68,7 @@
 
   B.indent = function() { return base_B(arguments, true); };
   B2.indent = function() { return base_B([C.to_array(arguments)], true); };
+  B.args_pass = function(fn) { return B2(C.args, B.all(I, _.flatten([toMR, fn])), C.args, B.v('0'), toMR); };
 
   B.val = B.v = B.V = function(key) { return B(X, key, getValue); };
   B.method = B.m = B.M = function() { return B.apply(void 0, [X].concat(_.toArray(arguments)).concat(method)); };
@@ -77,7 +84,7 @@
       I, // complete
       C.lambda(iter), // iter_or_predi
       base_loop_fn_base_args,
-        base_loop_fn);
+      base_loop_fn);
   };
 
   var arg_add_arr = function(list) { return MR(list, []); };
@@ -116,7 +123,7 @@
           var key = keys ? keys[i] : i;
           return [res, list[key], key, list];
         },
-          base_loop_fn)]);
+        base_loop_fn)]);
   };
 
   var spread_args = B.reduce(function(memo, arg) { return memo.concat(isMR(arg) ? arg : [arg]); });
@@ -129,14 +136,14 @@
       C.args1,
       C.lambda(iter), // iter_or_predi
       base_loop_fn_base_args,
-        base_loop_fn);
+      base_loop_fn);
   };
 
   B.filter = function(iter) {
     return B(
       function(result, list, keys, i, res) {  // body
         var key = keys ? keys[i - 1] : i - 1;
-        if (res) result.push(list[key]);
+        if (i > 0 && res) result.push(list[key]);
         return res;
       },
       JU, // end_q
@@ -144,14 +151,14 @@
       I, // complete
       C.lambda(iter),   // iter_or_predi
       base_loop_fn_base_args,
-        base_loop_fn);
+      base_loop_fn);
   };
 
   B.reject = function(iter) {
     return B(
       function(result, list, keys, i, res) {   // body
         var key = keys ? keys[i - 1] : i - 1;
-        if (res == false) result.push(list[key]);
+        if (i > 0 && !res) result.push(list[key]);
         return res;
       },
       JU, // end_q
@@ -159,7 +166,7 @@
       I, // complete
       C.lambda(iter),
       base_loop_fn_base_args,
-        base_loop_fn);
+      base_loop_fn);
   };
 
   B.find = function(iter) {
@@ -172,7 +179,20 @@
       JU, // complete
       C.lambda(iter),
       base_loop_fn_base_args,
-        base_loop_fn);
+      base_loop_fn);
+  };
+
+  B.find_key = B.findKey = function(iter) {
+    return B(
+      C.args4, // body
+      I, // end_q
+      function(list, keys, i) {
+        return keys ? keys[i - 1] : i - 1;
+      }, // end
+      J(undefined), // complete
+      C.lambda(iter),
+      base_loop_fn_base_args,
+      base_loop_fn);
   };
 
   B.findIndex = B.find_index = B.find_i = function(iter) {
@@ -185,7 +205,7 @@
       J(-1), // complete
       C.lambda(iter),
       base_loop_fn_base_args,
-        base_loop_fn);
+      base_loop_fn);
   };
 
   B.some = function(iter) {
@@ -196,7 +216,7 @@
       J(false), // complete
       C.lambda(iter),
       base_loop_fn_base_args,
-        base_loop_fn);
+      base_loop_fn);
   };
 
   B.every = function(iter) {
@@ -211,7 +231,7 @@
       J(true), // complete
       C.lambda(iter),
       base_loop_fn_base_args,
-        base_loop_fn);
+      base_loop_fn);
   };
 
   B.uniq = function(iter) {
@@ -230,7 +250,7 @@
       I, // complete
       iter,
       base_loop_fn_base_args,
-        base_loop_fn);
+      base_loop_fn);
   };
 
   B.tap = function() {
@@ -250,11 +270,21 @@
     return B2(C.arr_or_args_to_arr, B.find_i(function(v) { return a !== v;}), function(v) { return v === -1; });
   };
   B.isnt = function(a) { return B2(C.arr_or_args_to_arr, B.find_i([I, B.is(a)]), B.is(-1)); };
+  B.delay = function(time) {
+    return CB(function() {
+      var args = arguments, cb = args[args.length-1];
+      args.length = args.length - 1;
+      setTimeout(function() { cb.apply(null, args); }, time || 0);
+    });
+  };
 
   function base_loop_fn_base_args(list, keys, i) {
     var key = keys ? keys[i] : i;
     return [list[key], key, list];
   }
+
+  B.remove = function(remove) { return B(X, remove, C.remove); };
+  B.unset = function(key) { return B(X, key, C.unset); };
 
   function base_loop_fn(body, end_q, end, complete, iter_or_predi, params) {
     var context = this;
@@ -358,6 +388,7 @@
   C.filter = B.filter(null);
   C.reject = B.reject(null);
   C.find = B.find(null);
+  C.find_key = C.findKey = B.find_key(null);
   C.findIndex = C.find_index = C.find_i = B.find_index(null);
   C.some = B.some(null);
   C.every = B.every(null);
@@ -388,10 +419,87 @@
 
   C.log = window.console && window.console.log ? console.log.bind(console) : I;
   C.error = window.console && window.console.error ? console.error.bind(console) : I;
+  C.hi = B.args_pass(C.log);
 
   C.isString = _.isString;
   C.isArray = _.isArray;
   C.isArrayLike = _.isArrayLike;
+
+  C.remove = function(arr, remove) {
+    if (C.isArray(arr)) return MR(arr, removeByIndex(arr, arr.indexOf(remove)));
+    var find_key = C.find_key(arr, function(val) { return val==remove; });
+    return MR(arr, find_key !== undefined ? C.unset(arr, find_key) && remove : undefined);
+  };
+
+  C.unset = function(obj, key) { delete obj[key]; return obj; };
+
+  !function(B, C, notices) {
+    C.noti = C.Noti = C.notice =  {
+      on: on,
+      once: B(X,X,X, true, on),
+      off: off,
+      emit: emit,
+      emitAll: emitAll
+    };
+
+    B.noti = B.Noti = B.notice =  {
+      on: function() {
+        var args = arguments;
+        return function(func) { return A(args.length === 3 ? args :  _.isFunction(func) ? _.toArray(args).concat(func) : args, on); };
+      },
+      once: function(func) {
+        var args = arguments;
+        return function(func) { return A(_.toArray(args.length === 3 ? args :  _.isFunction(func) ? _.toArray(args).concat(func) : args).concat([true]), on) };
+      },
+      off: function() { return B.apply(null, _.toArray(arguments).concat(off)); },
+      emit: function() {
+        var args = arguments;
+        return function(args2) { return A(args.length == 3 ? args : _.isArray(args2) ? _.toArray(args).concat([args2]) : args, emit) };
+      },
+      emitAll: function() {
+        var args = arguments;
+        return function(args2) { return A(args.length == 2 ? args : _.isArray(args2) ? _.toArray(args).concat([args2]) : args, emitAll) };
+      }
+    };
+
+    function on(name1, name2, func, is_once) {
+      var _notice = notices[name1];
+      func.is_once = !!is_once;
+      if (!_notice) _notice = notices[name1] = {};
+      (_notice[name2] = _notice[name2] || []).push(func);
+      return func;
+    }
+
+    function off(name1, n2_or_n2s) {
+      var _notice = notices[name1];
+      if (arguments.length == 1) C.unset(notices, name1);
+      else if (_notice && arguments.length == 2) map(_.isString(n2_or_n2s) ? [n2_or_n2s] : n2_or_n2s, B(_notice, C.unset));
+    }
+
+    function emitAll(name1, emit_args) {
+      var key, _notice = notices[name1];
+      if (_notice) for(key in _notice) C(_notice, key, make_map_emit(emit_args));
+    }
+
+    function emit(name1, name2, emit_args) {
+      var _notice = notices[name1];
+      if (_notice) C(name2, [
+        IF(_.isFunction, [J(void 0), name2, function(name2) { return _.isString(name2) ? [name2] : name2; }]).ELSEIF(_.isString, J([name2])).ELSE(I),
+        B(X, B([B.all(J(_notice), I), IF([C.val, function(arr) { return arr && arr.length }], make_map_emit(emit_args))]), map)
+      ]);
+    }
+
+    function make_map_emit(args) { return [B.tap(C.val, B(X, B([I, B(args, X, A)]), map)), function (_n, k) { _n[k] = C.reject(_n[k], B.val('is_once')); }];}
+  }(B, C, {});
+
+  C.remove_by_index = C.removeByIndex = removeByIndex;
+
+  function removeByIndex(arr, from) {
+    if (from == -1) return arr.length;
+    var rest = arr.slice(from + 1 || arr.length);
+    arr.length = from;
+    return arr.push.apply(arr, rest);
+  }
 
   C.test = function(tests) {
     var fails = J([]), all = J([]), fna = J([fails(), all()]);
@@ -415,10 +523,15 @@
   }
 
   /* H start */
-  var TAB_SIZE = 2;
-  var TAB = "( {" + TAB_SIZE + "}|\\t)"; // "( {4}|\\t)"
-  var TABS = TAB + "+";
-  var number_of_tab = function(a) { return a.match(new RegExp("^" + TAB + "+"))[0].length / TAB_SIZE; };
+  H.TAB_SIZE = 2;
+  function TAB() { return "( {" + H.TAB_SIZE + "}|\\t)"; }; // "( {4}|\\t)"
+  function TABS() { return TAB() + "+"; };
+  function number_of_tab(a) {
+    var snt = a.match(new RegExp("^" + TABS()))[0];
+    var tab_length = (snt.match(/\t/g) || []).length;
+    var space_length = snt.replace(/\t/g, "").length;
+    return space_length / H.TAB_SIZE + tab_length;
+  }
 
   function H(var_names/*, source...*/) {
     return s.apply(null, [H, 'H', convert_to_html].concat(_.toArray(arguments)));
@@ -431,7 +544,9 @@
   H._ABC_func_storage = {};
 
   function s(func, obj_name, option, var_names/*, source...*/) {      // used by H and S
-    var source = C.map(_.rest(arguments, 4), function(str_or_func) {
+    var args = _.toArray(arguments);
+    if (args.length == 4) (args[4] = args[3]) && (var_names = args[3] = '$');
+    var source = C.map(_.rest(args, 4), function(str_or_func) {
       if (_.isString(str_or_func)) return str_or_func;
 
       var key = _.uniqueId("_ABC_func_storage");
@@ -440,7 +555,7 @@
     }).join("");
 
     return function() {
-      var data = var_names ? _.object(var_names.match(/\w+/g), _.toArray(arguments)) : void 0;
+      var data = var_names ? _.object(var_names.match(/[\w\$]+/g), _.toArray(arguments)) : void 0;
       return C(source, data, [remove_comment, unescaped_exec, option, insert_datas1, insert_datas2, I]);
     };
   }
@@ -454,7 +569,7 @@
 
   function remove_comment(source, data) {
     return MR(source.replace(/\/\*(.*?)\*\//g, "").replace(
-      new RegExp("\/\/" + TABS + ".*?(?=((\/\/)?" + TABS + "))|\/\/" + TABS + ".*", "g"), ""), data);
+      new RegExp("\/\/" + TABS() + ".*?(?=((\/\/)?" + TABS() + "))|\/\/" + TABS() + ".*", "g"), ""), data);
   }
 
   var unescaped_exec = B(/!\{(.*?)\}!/, I, s_exec); //!{}!
@@ -472,9 +587,9 @@
 
   function convert_to_html(source, data) {
     var tag_stack = [];
-    var ary = source.match(new RegExp(TABS + "\\S.*?(?=" + TABS + "\\S)|" + TABS + "\\S.*", "g"));
+    var ary = source.match(new RegExp(TABS() + "\\S.*?(?=" + TABS() + "\\S)|" + TABS() + "\\S.*", "g"));
     var base_tab = number_of_tab(ary[0]);
-    ary[ary.length - 1] = ary[ary.length - 1].replace(new RegExp(TAB + "{" + base_tab + "}$"), "");
+    ary[ary.length - 1] = ary[ary.length - 1].replace(new RegExp(TAB() + "{" + base_tab + "}$"), "");
 
     var is_paragraph = 0;
     for (var i = 0; i < ary.length; i++) {
@@ -488,12 +603,12 @@
 
       if (!is_paragraph) {
         ary[i] = line(ary[i], tag_stack);
-        if (tmp.match(new RegExp("^(" + TABS + ")(\\[.*?\\]|\\{.*?\\}|\\S)+\\.(?!\\S)"))) is_paragraph = number_of_tab(RegExp.$1) + 1;
+        if (tmp.match(new RegExp("^(" + TABS() + ")(\\[.*?\\]|\\{.*?\\}|\\S)+\\.(?!\\S)"))) is_paragraph = number_of_tab(RegExp.$1) + 1;
         continue;
       }
 
-      ary[i] = ary[i].replace(new RegExp("(" + TAB + "{" + is_paragraph + "})", "g"), "\n");
-      if (ary[i] !== (ary[i] = ary[i].replace(new RegExp("\\n(" + TABS + "[\\s\\S]*)"), "\n"))) ary = push_in(ary, i + 1, RegExp.$1);
+      ary[i] = ary[i].replace(new RegExp("(" + TAB() + "{" + is_paragraph + "})", "g"), "\n");
+      if (ary[i] !== (ary[i] = ary[i].replace(new RegExp("\\n(" + TABS() + "[\\s\\S]*)"), "\n"))) ary = push_in(ary, i + 1, RegExp.$1);
     }
 
     while (tag_stack.length) ary[ary.length - 1] += end_tag(tag_stack.pop()); // 마지막 태그
@@ -502,7 +617,7 @@
   }
 
   function line(source, tag_stack) {
-    source = source.replace(new RegExp("^" + TABS + "\\|"), "\n").replace(/^ */, "");
+    source = source.replace(new RegExp("^" + TABS() + "\\|"), "\n").replace(/^\s*/, "");
     return source.match(/^[\[.#\w\-]/) ? source.replace(/^(\[.*\]|\{.*?\}|\S)+ ?/, function(str) {
       return start_tag(str, tag_stack);
     }) : source;
@@ -520,7 +635,7 @@
 
     // name
     name = (!name || name == 'd') ? 'div' : name == 'sp' ? 'span' : name;
-    if (name != 'input') tag_stack.push(name);
+    if (name != 'input' && name != 'br' ) tag_stack.push(name);
 
     // attrs
     str = str.replace(/\[(.*)\]/, function(match, inner) { return (attrs += ' ' + inner) && ''; });
@@ -622,22 +737,18 @@ function respect_underscore(_) {
   var optimizeCb = function(func, context, argCount) {
     if (context === void 0) return func;
     switch (argCount == null ? 3 : argCount) {
-      case 1:
-        return function(value) {
-          return func.call(context, value);
-        };
-      case 2:
-        return function(value, other) {
-          return func.call(context, value, other);
-        };
-      case 3:
-        return function(value, index, collection) {
-          return func.call(context, value, index, collection);
-        };
-      case 4:
-        return function(accumulator, value, index, collection) {
-          return func.call(context, accumulator, value, index, collection);
-        };
+      case 1: return function(value) {
+        return func.call(context, value);
+      };
+      case 2: return function(value, other) {
+        return func.call(context, value, other);
+      };
+      case 3: return function(value, index, collection) {
+        return func.call(context, value, index, collection);
+      };
+      case 4: return function(accumulator, value, index, collection) {
+        return func.call(context, accumulator, value, index, collection);
+      };
     }
     return function() {
       return func.apply(context, arguments);
@@ -668,11 +779,7 @@ function respect_underscore(_) {
     };
   };
 
-  _.property = function(key) {
-    return function(obj) {
-      return obj == null ? void 0 : obj[key];
-    };
-  };
+  _.property = function(key) { return function(obj) { return obj == null ? void 0 : obj[key]; }; };
 
   var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
   var getLength = function(obj) { return obj.length; };
@@ -693,7 +800,13 @@ function respect_underscore(_) {
     return _.values(obj);
   };
 
-  _.rest = function(array, n, guard) { return slice.call(array, n == null || guard ? 1 : n); };
+  _.rest = function(array, n, guard) {
+    return slice.call(array, n == null || guard ? 1 : n);
+  };
+
+  _.initial = function(array, n, guard){
+    return slice.call(array, 0 , Math.max(0, array.length-(null==n||guard?1:n)));
+  };
 
   var flatten = function(input, shallow, strict, startIndex) {
     var output = [], idx = 0;
@@ -794,9 +907,7 @@ function respect_underscore(_) {
     return _.isArray(obj) ? obj.slice() : _.extend({}, obj);
   };
 
-  _.isArray = nativeIsArray || function(obj) {
-    return toString.call(obj) === '[object Array]';
-  };
+  _.isArray = nativeIsArray || function(obj) { return toString.call(obj) === '[object Array]'; };
 
   _.isObject = function(obj) {
     var type = typeof obj;
@@ -805,19 +916,12 @@ function respect_underscore(_) {
 
   var fn_names = ['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp', 'Error'];
   for (var i = 0; i < fn_names.length; i++)
-    (function(name) {
-      _['is' + name] = function(obj) {
-        return toString.call(obj) === '[object ' + name + ']';
-      };
-    })(fn_names[i]);
+    (function(name) { _['is' + name] = function(obj) { return toString.call(obj) === '[object ' + name + ']'; }; })(fn_names[i]);
 
-  if (!_.isArguments(arguments)) _.isArguments = function(obj) {
-    return _.has(obj, 'callee');
-  };
+  if (!_.isArguments(arguments)) _.isArguments = function(obj) { return _.has(obj, 'callee'); };
 
-  if (typeof /./ != 'function' && typeof Int8Array != 'object') _.isFunction = function(obj) {
-    return typeof obj == 'function' || false;
-  };
+  if (typeof /./ != 'function' && typeof Int8Array != 'object')
+    _.isFunction = function(obj) { return typeof obj == 'function' || false; };
 
   _.has = function(obj, key) { return obj != null && hasOwnProperty.call(obj, key); };
 
