@@ -22,7 +22,7 @@ _abcjs is functional javascript library._
  - [each, map, find, ...](https://github.com/marpple/abc-functional-javascript/blob/master/README_EN.md#07-eachmapfind)
  - [HTML Template](https://github.com/marpple/abc-functional-javascript/blob/master/README_EN.md#08-html-template)
  - [IF ELSEIF ELSE](https://github.com/marpple/abc-functional-javascript/blob/master/README_EN.md#09-if-elseif-else)
- - [B.all B.div](https://github.com/marpple/abc-functional-javascript/blob/master/README_EN.md#10-ball-bdiv)
+ - [B.all B.spread](https://github.com/marpple/abc-functional-javascript/blob/master/README_EN.md#10-ball-bdiv)
  - [this](https://github.com/marpple/abc-functional-javascript/blob/master/README_EN.md#11-this)
  - [ETC](https://github.com/marpple/abc-functional-javascript/blob/master/README_EN.md#12-etc)
  - [throw, ERR, CATCH](https://github.com/marpple/abc-functional-javascript/blob/master/README_EN.md#13-throw-err-catch)
@@ -700,18 +700,18 @@ var users = [
 ];
 
 C(users, [
-    B.filter(B.V('activated')),
+    B.filter(B.v('activated')),
     B.reject(function(user) {
         return user.age > 30;
     }),
-    B.map(B.V('age')),
+    B.map(B.v('age')),
     function(r8) {
         console.log(r8); // [20, 17]
     }]);
 
 C(users, [
-    B.uniq('age'),
-    B.map(B.V('id')),
+    B.uniq('$.age'),
+    B.map(B.v('id')),
     function(r9) {
         console.log(r9); // [1, 3, 4, 5]
     }]);
@@ -720,14 +720,14 @@ C(users, [
     G[":reject :age > 30"] = B.reject(function(user) {
         return user.age > 30;
     }),
-    B.every(B.V('activated')),
+    B.every(B.v('activated')),
     function(r10) {
         console.log(r10); // false
     }]);
 
 C(users, [
     G[":reject :age > 30"],
-    B.some(B.V('activated')),
+    B.some(B.v('activated')),
     function(r11) {
         console.log(r11); // true
     }]);
@@ -1062,7 +1062,7 @@ In order to implement the `IF().ELSEIF().ELSE()`, a separate code for asynchrono
 
 
 
-### 10. [B.all B.div](https://github.com/marpple/abc-functional-javascript/blob/master/example/09.%20IF%20ELSEIF%20ELSE.html)
+### 10. [B.all B.spread](https://github.com/marpple/abc-functional-javascript/blob/master/example/09.%20IF%20ELSEIF%20ELSE.html)
 `B.all`
 ```javascript
 C(1, 5, [
@@ -1080,10 +1080,10 @@ C(1, 5, [
 ```
 
 
-`B.div`
+`B.spread`
 ```javascript
 C(1, 2, 3, 4, [
-    B.div(
+    B.spread(
         function(a) { return a + a; }, // a
 
         [function(a) { return a + a; },
@@ -1096,7 +1096,7 @@ C(1, 2, 3, 4, [
     }]);
 
 C(1, 2, 3, 4, [
-    B.div(
+    B.spread(
         function(a) { return a + a; }, // a
 
         [function(a) { return a + a; },

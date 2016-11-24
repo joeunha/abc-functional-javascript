@@ -11,6 +11,11 @@ _abcjs는 함수형 자바스크립트(functional javascript) 라이브러리입
   - 다른 자바스크립트 라이브러리에 대한 의존성이 없는 작은 라이브러리입니다.
   - _Respect Underscorejs!_
 
+## 함수형 자바스크립트 관련글
+  1. [함수형 자바스크립트의 실용성 1](https://github.com/marpple/abc-functional-javascript/wiki/%ED%95%A8%EC%88%98%ED%98%95-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EC%9D%98-%EC%8B%A4%EC%9A%A9%EC%84%B1-1)
+  2. [함수형 자바스크립트의 실용성 2](https://github.com/marpple/abc-functional-javascript/wiki/%ED%95%A8%EC%88%98%ED%98%95-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EC%9D%98-%EC%8B%A4%EC%9A%A9%EC%84%B1-2)
+  3. [Underscorejs 만들기 1](https://github.com/marpple/abc-functional-javascript/wiki/Underscorejs-%EB%A7%8C%EB%93%A4%EA%B8%B0-1-(_.map,-_.each))
+  4. [Promise와 abcjs의 비동기 프로그래밍 비교](https://github.com/marpple/abc-functional-javascript/wiki/Promise%EC%99%80-abcjs%EC%9D%98-%EB%B9%84%EB%8F%99%EA%B8%B0-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-%EB%B9%84%EA%B5%90)
 
 ## 시작하기
 __abcjs와 함께 함수형 프로그래밍을 즐겨보세요.__
@@ -25,7 +30,7 @@ __abcjs와 함께 함수형 프로그래밍을 즐겨보세요.__
  - [each, map, find, ...](https://github.com/marpple/abc-functional-javascript/blob/master/README.md#07-eachmapfind)
  - [HTML Template](https://github.com/marpple/abc-functional-javascript/blob/master/README.md#08-html-template)
  - [IF ELSEIF ELSE](https://github.com/marpple/abc-functional-javascript/blob/master/README.md#09-if-elseif-else)
- - [B.all B.div](https://github.com/marpple/abc-functional-javascript/blob/master/README.md#10-ball-bdiv)
+ - [B.all B.spread](https://github.com/marpple/abc-functional-javascript/blob/master/README.md#10-ball-bspread)
  - [this](https://github.com/marpple/abc-functional-javascript/blob/master/README.md#11-this)
  - [ETC](https://github.com/marpple/abc-functional-javascript/blob/master/README.md#12-etc)
  - [throw, ERR, CATCH](https://github.com/marpple/abc-functional-javascript/blob/master/README.md#13-throw-err-catch)
@@ -713,18 +718,18 @@ var users = [
 ];
 
 C(users, [
-    B.filter(B.V('activated')),
+    B.filter(B.v('activated')),
     B.reject(function(user) {
         return user.age > 30;
     }),
-    B.map(B.V('age')),
+    B.map(B.v('age')),
     function(r8) {
         console.log(r8); // [20, 17]
     }]);
 
 C(users, [
-    B.uniq('age'),
-    B.map(B.V('id')),
+    B.uniq('$.age'),
+    B.map(B.v('id')),
     function(r9) {
         console.log(r9); // [1, 3, 4, 5]
     }]);
@@ -733,14 +738,14 @@ C(users, [
     G[":reject :age > 30"] = B.reject(function(user) {
         return user.age > 30;
     }),
-    B.every(B.V('activated')),
+    B.every(B.v('activated')),
     function(r10) {
         console.log(r10); // false
     }]);
 
 C(users, [
     G[":reject :age > 30"],
-    B.some(B.V('activated')),
+    B.some(B.v('activated')),
     function(r11) {
         console.log(r11); // true
     }]);
@@ -1099,7 +1104,7 @@ abcjs를 이용하여 함수형 프로그래밍을 하면 비동기가 지원되
 
 
 
-### 10. [B.all B.div](https://github.com/marpple/abc-functional-javascript/blob/master/example/09.%20IF%20ELSEIF%20ELSE.html)
+### 10. [B.all B.spread](https://github.com/marpple/abc-functional-javascript/blob/master/example/09.%20IF%20ELSEIF%20ELSE.html)
 `B.all` 함수는 같은 인자를 모든 파이프라인 혹은 함수에게 넘겨서 multiple results로 결과를 만드는 함수를 리턴합니다.
 ```javascript
 C(1, 5, [
@@ -1117,10 +1122,10 @@ C(1, 5, [
 ```
 
 
-`B.div` 함수는 인자를 하나씩 모든 파이프라인 혹은 함수에게 나눠주고 multiple results로 결과를 만드는 함수를 리턴합니다.
+`B.spread` 함수는 인자를 하나씩 모든 파이프라인 혹은 함수에게 나눠주고 multiple results로 결과를 만드는 함수를 리턴합니다.
 ```javascript
 C(1, 2, 3, 4, [
-    B.div(
+    B.spread(
         function(a) { return a + a; }, // a
 
         [function(a) { return a + a; },
@@ -1135,7 +1140,7 @@ C(1, 2, 3, 4, [
     }]);
 
 C(1, 2, 3, 4, [
-    B.div(
+    B.spread(
         function(a) { return a + a; }, // a
 
         [function(a) { return a + a; },
@@ -1169,8 +1174,8 @@ C(1, 5, [
         console.log(a); // [6, 16, 1, 5]
     }]);
 ```
-Pipeline 패턴으로 코딩을 하다보면 `B.all`과 `B.div` 같은 일을 하고 싶을때가 많습니다.
-`B.all`과 `B.div`에게 넘겨진 함수 혹은 Pipeline들은 하나씩 차례대로 실행됩니다.
+Pipeline 패턴으로 코딩을 하다보면 `B.all`과 `B.spread` 같은 일을 하고 싶을때가 많습니다.
+`B.all`과 `B.spread`에게 넘겨진 함수 혹은 Pipeline들은 하나씩 차례대로 실행됩니다.
 비동기가 일어나더라도 위에서 부터 하나씩 차례대로 실행됩니다.
 
 ### 11. [this](https://github.com/marpple/abc-functional-javascript/blob/master/example/11.%20this.html)

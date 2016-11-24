@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+
+<script src="js/underscore.js"></script>
+<script src="js/jquery.js"></script>
+<script src="../abc.js"></script>
+
+<script>
+
+  var a = {
+    b: {
+      c: 5,
+      d: 10
+    },
+    e: [10, 2, 4, { g: 5 }],
+    f: null,
+    h: true,
+    i: false,
+  };
+
+  try {
+    console.log(a.b.d); // 10
+    console.log(a.b.d.g); // undefined
+    console.log(a.b.d.g.h); // error
+  } catch (e) {
+    console.log(e);
+    // TypeError: Cannot read property 'h' of undefined(…)
+  }
+
+  // C.val == C.v
+  console.log(C.val(a, 'b.d.g.h')); // undefined
+  console.log(C.val(a, 'e.1')); // 2
+  console.log(C.val(a, 'e.2')); // 4
+  console.log(C.val(a, 'e.length')); // 3
+  console.log(C.val(a, 'e.3.g')); // 5
+  console.log(C.v(a, 'f')); // null
+  console.log(C.v(a, 'f.hoho.hi')); // undefined
+  console.log(C.v(a, 'h')); // true
+  console.log(C.v(a, 'h.hi')); // undefined
+  console.log(C.v(a, 'i')); // false
+
+
+</script>
+
+</body>
+</html>

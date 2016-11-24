@@ -1,0 +1,2 @@
+글 위치가 이동 되었습니다.
+4. [Promise와 abcjs의 비동기 프로그래밍 비교](https://github.com/marpple/abc-functional-javascript/wiki/Promise%EC%99%80-abcjs%EC%9D%98-%EB%B9%84%EB%8F%99%EA%B8%B0-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-%EB%B9%84%EA%B5%90)
